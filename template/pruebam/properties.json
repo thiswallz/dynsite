@@ -1,0 +1,6 @@
+{
+    "custom_collection" : true,
+    "max_visible_optionsmenu": 7,
+    "css_files" : ["assets/style.css"],
+    "js_files" : ["assets/app.js"]
+}

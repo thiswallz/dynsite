@@ -1,0 +1,56 @@
+<krpano>
+	<!-- Plugins -->
+	<plugin name="ga"
+			url="%SWFPATH%/plugins/analytics.swf"
+			alturl="%SWFPATH%/plugins/analytics.js"
+			keep="true"
+			preload="true"
+
+			debug="true"
+			account="UA-17063715-1"
+			prefix="/virtualtour"
+			>
+		<pano name="pano1"
+			  xmlurl="%HTMLPATH%/pano/0.xml"
+			  pageurl="/crane/"
+			  />
+		<pano name="pano2"
+			  xmlurl="%HTMLPATH%/pano/1.xml"
+			  pageurl="/ring/"
+			  />
+
+		<event name="customevent"
+			   global="true"
+			   target="plugin[trackevent].onclick"
+			   data="User Interface,Global event"
+			   />
+		<event name="pano1specificevent"
+			   xmlurl="%HTMLPATH%/pano/0.xml"
+			   target="hotspot[trackpanospecificevent].onclick"
+			   data="User Interface,Pano 1 specific event"
+			   />
+		<event name="pano2specificevent"
+			   xmlurl="%HTMLPATH%/pano/1.xml"
+			   target="hotspot[trackpanospecificevent].onclick"
+			   data="User Interface,Pano 2 specific event"
+			   />
+	</plugin>
+
+	<!-- Actions -->
+	<action name="activatepano">
+		if (%1 != null,
+			if (get(action[mainloadpano].content) !== null,
+				if (%2 == xml, mainloadpano(%HTMLPATH%/%1), mainloadpano(%1)),
+					if (%2 == xml, loadpano(%HTMLPATH%/%1,null,MERGE,BLEND(1)), loadscene(%1,null,MERGE,BLEND(1)));
+					wait(blend);
+			)
+		);
+	</action>
+
+	<action name="add_scenes_to_analytics">
+		for (set(i,0), i LT scene.count, inc(i),
+		  if (get(scene[get(i)].url), copy(data[a.url].content, scene[get(i)].url), copy(data[a.url].content, scene[get(i)].name));
+		  plugin[ga].addPano(get(scene[get(i)].name), get(scene[get(i)].name), true, get(data[a.url].content));
+		);
+	</action>
+</krpano>

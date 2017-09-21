@@ -1,0 +1,24 @@
+{
+    "custom_collection" : false,
+    "libs": [ 
+        {
+            "id": "$1",
+            "src": "https://maps.googleapis.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places&amp;key=AIzaSyBaqD25nJGCCNmzfE_3O3ocJgnR3gUt_jc",
+            "async": false
+        },
+        {
+            "ref": "$1",
+            "src": "libs/vendor/google-maps/ng-map.min.js",
+            "async": false,
+            "module": "ngMap"
+        },
+        {
+            "src": "template/general/assets/toaster.min.js",
+            "async": false,
+            "module": "toaster"
+        }
+    ],
+    "max_visible_optionsmenu": 7,
+    "css_files" : ["assets/style.css", "assets/toaster.min.css"],
+    "js_files" : ["assets/app.js"]
+}

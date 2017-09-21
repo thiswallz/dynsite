@@ -1,0 +1,11 @@
+<div class="row section">
+	<div class="col-lg-12 paginationWrapper">
+        <ul class="pagination">
+          <li ng-if="::boundaryLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-first"><a href ng-click="selectPage(1, $event)">{{::getText('first')}}</a></li>
+          <li ng-if="::directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}"><a aria-label="Previous" class="previous" href ng-click="selectPage(page - 1, $event)"><span aria-hidden="true"></span></a></li>
+          <li ng-repeat="page in pages track by $index" class="pagination-page hidden-xs"><a href ng-click="selectPage(page.number, $event)" ng-class="{selected: page.active, disabled: ngDisabled&&!page.active}">{{page.text}}</a></li>
+          <li ng-if="::directionLinks" ng-class="{disabled: noNext()||ngDisabled}"><a aria-label="Next" class="next" href ng-click="selectPage(page + 1, $event)"><span aria-hidden="true"></span></a></li>
+          <li ng-if="::boundaryLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-last"><a href ng-click="selectPage(totalPages, $event)">{{::getText('last')}}</a></li>
+      </ul>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+{
+    "custom_collection" : false,
+    "libs": [ 
+        {
+            "id": "$1",
+            "src": "https://maps.googleapis.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places&amp;key=AIzaSyBaqD25nJGCCNmzfE_3O3ocJgnR3gUt_jc",
+            "async": false
+        },
+        {
+            "ref": "$1",
+            "src": "libs/vendor/google-maps/ng-map.min.js",
+            "async": false,
+            "module": "ngMap"
+        }
+    ],
+    "max_visible_optionsmenu": 5,
+    "css_files" : [],
+    "js_files" : []
+}

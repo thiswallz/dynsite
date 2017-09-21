@@ -1,0 +1,32 @@
+.header-avatar{
+visibility: hidden !important;
+
+}
+
+
+.join-hl {
+  text-indent: -9999px;
+  line-height: 0; /* Collapse the original line */
+}
+
+.join-hl::after {
+  content: "Quieres unirte?";
+  text-indent: 0;
+  display: block;
+  line-height: initial; /* New content takes up original line height */
+}
+
+.info p:first-child {
+    visibility: hidden !important;
+}
+
+.info p:last-child {
+visibility: hidden !important;
+}
+
+.info::after {
+  content: "Texto Información";
+  text-indent: 0;
+  display: block;
+  line-height: initial; /* New content takes up original line height */
+}

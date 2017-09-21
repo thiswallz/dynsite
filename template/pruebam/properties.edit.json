@@ -1,0 +1,52 @@
+{
+    "custom_collection" : false,
+    "max_visible_optionsmenu": 5,
+    "css_files" : ["assets/style.css"],
+    "js_files" : ["assets/app.js"],
+    "edit_sections"     : [{
+        "cmp"       : "id",
+        "val"       : "bc_headerWrapper",
+        "options"   : ["bgcolor"],
+        "handlercss": "margin-top: 50px"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_homeView",
+        "options"   : ["bgurl", "bgcolor"],
+        "msg"       : "mínima de 1920x330 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_clientLogo",
+        "options"   : ["bgurl", "logoLayout"],
+        "msg"       : "máxima de 500 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_clientTitle",
+        "options"   : ["color"],
+        "manager"   : "bc_tab_setting,bc_custom_general",
+        "msg"       : ""
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainWraper",
+        "options"   : ["bgurl", "bgcolor"],
+        "msg"       : "máxima de 800 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainFooter",
+        "options"   : ["bgurl", "bgcolor", "color"],
+        "msg"       : "mínima de 1920x330 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainFooter_plus",
+        "manager"   : "bc_tab_setting,bc_custom_links",
+        "handlercss": "margin-top: 0px"
+    },{
+        "cmp"       : "class",
+        "val"       : "menuOption2",
+        "options"   : ["bgcolor", "color"]
+    }
+
+
+    
+    ]
+}
+

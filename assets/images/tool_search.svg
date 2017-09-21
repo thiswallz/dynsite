@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<svg width="27" height="21" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Generator: Sketch 39 (31667) - http://www.bohemiancoding.com/sketch -->
+ <title>Search</title>
+ <desc>Created with Sketch.</desc>
+ <g>
+  <title>Layer 1</title>
+  <g fill-rule="evenodd" fill="none" id="Page-1" stroke="null">
+   <g stroke-width="1.5" id="subHeader" stroke="#424242">
+    <g id="Search" stroke="null">
+     <circle r="6.409004" cy="9.254817" cx="11.421342" id="Oval-61" stroke="null"/>
+     <path stroke-linecap="square" id="Line" d="m17.47429,12.607339l4.98478,3.725025" stroke="null"/>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

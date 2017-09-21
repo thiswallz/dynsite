@@ -1,0 +1,754 @@
+
+<krpano onstart="init();delayedcall(1.0,start_vr());">
+	
+	<include url="contextmenu.xml" />
+
+	<!-- webvr.xml - WebVR plugin, enter/exit VR buttons, VR cursor, VR setup -->
+	<include url="webvr.xml" />
+
+	<!-- add/overwrite some settings from the webvr.xml for this example
+		- enable the fake mode
+		- add events for portrait usage
+	-->
+
+	<plugin name="ga"
+			url="../plugins/analytics.swf"
+			alturl="../plugins/analytics.js"
+			keep="true"
+			preload="true"
+			debug="false"
+			account="UA-90618226-1"
+			prefix="/EntelVr"
+			/>
+
+	<plugin name="WebVR"
+			devices="html5"
+	        mobilevr_fake_support="true"
+	        onentervr="webvr_onentervr(); if(typeVr == '360',enterStereo(true);,enterStereo();); gyro_in_portrait_mode();"
+	        onexitvr="webvr_onexitvr(); tween(layer[webvr_rotate_to_landscape_request].alpha, 0.0, 0.0);"
+	        />
+
+	<!-- re-align the vr button and 'auto-start' the video when pressing the enterVR button -->
+	<layer name="webvr_exitbutton" ondown="plugin[video].seek(0); plugin[video].stop();" />
+
+	<layer name="init_panoramico"
+		   keep="true" vr="true"
+		   onclick="set(visible, false);set(ty, 10000);set(zorder, 100); set(style[thumb].enabled, true);video_auto_start();"
+		   url="../images/init_panoramico.png"
+	       align="center.center"
+	       enabled= "false"
+	       visible="false"
+	       zorder="0" width="100%" height="100%"/> 
+
+	<layer name="init_vr"
+		   keep="true" vr="true"
+		   onclick="set(visible, false);set(ty, 10000);set(zorder, 100); set(style[thumb].enabled, true);video_auto_start();"
+		   url="../images/init_vr.png"
+	       align="center.center"
+	       enabled= "false"
+	       visible="false"
+	       zorder="0" width="200" height="150"/>
+
+	<layer name="exit_stereo"
+		   keep="true" vr="true"
+		   onclick="enterStereo();"
+		   url="../images/exit.png"
+	       align="top.right" y="24" x="24"
+	       alpha="0.0"
+		   width="70" height="50"/>
+
+	<layer name="enter_stereo"
+	       keep="true" vr="true"
+		   onclick="video_auto_start();enterStereo();"
+		   url="../images/vr.png"
+		   align="top.right" y="24" x="24"
+		   alpha="0.5"
+		   width="70" height="50"/>
+
+
+	<!-- show a 'rotate the device' info when the mobile device is in portrait orientation in VR mode -->
+	<layer name="webvr_rotate_to_landscape_request" keep="true" vr="true" devices="mobile"
+	       url="../images/rotate_device.png" scale="0.4"
+	       align="top" edge="center" y="28%"
+	       autoalpha="true" alpha="0.0"
+	       enabled="false"
+	       />
+
+	<!--<events name="webvr_events" keep="true" devices="html5" onresize.mobile="webvr_init_portrait_mode();" />-->
+
+	<action name="enterStereo">
+		if(modevr OR '%1' == 'true',
+			<!-- TRACK pageview  -->
+			plugin[ga].trackpageview(/modo_panoramico/);
+
+			set(layer[init_panoramico].visible, true);
+			set(layer[init_panoramico].ty, 0.0);
+			set(layer[init_panoramico].enabled, true);
+			set(layer[init_vr].visible, false);
+			set(layer[init_vr].ty, 10000);
+			set(layer[init_vr].enabled, false);
+
+			set(display.stereo, false);
+			set(webvr.mobilevr_sensor_mode, 3);
+			webvr.update();
+			set(modevr, false);
+			set(layer[exit_stereo].alpha, 0.0);
+			set(layer[enter_stereo].visible, true);
+
+		,
+			<!-- TRACK pageview  -->
+			plugin[ga].trackpageview(/modo_vr/);
+
+			set(layer[init_vr].visible, true);
+			set(layer[init_vr].ty, 0.0);
+			set(layer[init_vr].enabled, true);
+			set(layer[init_panoramico].visible, false);
+			set(layer[init_panoramico].ty, 10000);
+			set(layer[init_panoramico].enabled, false);
+
+
+			set(display.stereo, true);
+			set(webvr.mobilevr_sensor_mode, 3);
+			webvr.update();
+			set(modevr, true);
+			set(layer[exit_stereo].alpha, 0.5);
+			set(layer[enter_stereo].visible, false);
+
+		);
+
+	</action>
+
+	<events name="webvr_events" keep="true" devices="html5" onresize.mobile="gyro_in_portrait_mode();" />
+
+	<action name="gyro_in_portrait_mode">
+		if(device.mobile AND webvr.isenabled,
+			div(aspect, stagewidth, stageheight);
+			if(aspect != lastaspect,
+				if(stagewidth GT stageheight,
+					<!-- landscape orientation - use stereo rendering and a direct/fast gyro sensor mode -->
+					tween(layer[webvr_rotate_to_landscape_request].alpha, 0.0, 0.0);
+				  ,
+					<!-- portrait orientation - use normal rendering and a smoother/slower gyro sensor mode -->
+					tween(layer[webvr_rotate_to_landscape_request].alpha, 1.0);
+					delayedcall(3.0, tween(layer[webvr_rotate_to_landscape_request].alpha, 0.0, 1.0); );
+				  );
+			  );
+		  ,
+			set(lastaspect, 0);
+		  );
+	</action>
+
+	<!-- allow scene switching by the PageUp/PageDown keys -->
+	<events name="keybcontrol" keep="true" onexitfullscreen="plugin[video].seek(0); plugin[video].stop();" onkeyup="if(keycode == 33, nextscene_loop(-1)); if(keycode == 34, nextscene_loop(+1));" />
+
+
+	<!-- the intro pano image -->
+	<view fovtype="VFOV" fov="150" fovmin="40" fovmax="150" />
+	<preview url="../images/intro/preview.jpg" />
+	<image>
+		<cube url="../images/intro/pano_%s.jpg" />
+	</image>
+
+	<!--
+		SPECIAL CASE FOR THE VIDEO PANO ON MOBILE DEVICES
+		- on mobile devices its only possible to start a video by as reaction to
+		  a touch-input of the user (a given limitation by the browsers)
+		- but this will be problemtic when using a VR-navigation without any touching,
+		  taking off the headset and touching to start the video would be bad...
+		- as workaround load the video already on startup and use the first
+		  touch on the screen (e.g. the touch to the 'Enter VR' button) to
+		  start playing the video
+		- the video itself will be directly paused after having started and
+		  not shown on the screen (visible=false)
+		- additionally there the new setting 'use_as_videopano' that prepares
+		  the video for a later (=in an other scene) usage as video pano
+
+	-->
+
+	<plugin name="video" keep="true"
+	        url.flash="../plugins/videoplayer.swf"
+	        url.html5="../plugins/videoplayer.js"
+			videourl.no-ios="../../video/video-1024x512.mp4"
+	        videourl.ios="../../video/video-1024x512.mp4"
+	        loop="true"
+	        pausedonstart="false"
+	        visible="false"
+	        panovideo="true" />
+
+	<events name="video_events" devices="mobile.or.tablet" keep="true" onremovepano="if(xml.scene != video_scene AND xml.scene != video3d_scene, plugin[video].seek(0); plugin[video].stop(); );" />
+
+	<action name="video_auto_start">
+	trace(video_auto_start);
+		if(video_auto_start !== true,
+		trace("entro if");
+			if(plugin[video].ispaused,
+			trace("entro if2");
+				plugin[video].play();
+				delayedcall(0.1, plugin[video].pause() );
+				set(events[video_events].onmousedown, null);
+				set(video_auto_start, true);
+			  );
+		);
+
+	</action>
+
+	<action name="video_load">
+		set(video_name, %1);
+		trace("video_load");
+		plugin[video].playvideo(get(current_video));
+		<!-- TRACK pageview  -->
+		plugin[ga].trackpageview(%2%1);
+		plugin[ga].trackevent(Player, Play, get(video_name));"
+	</action>
+
+	<action name="video_stop">
+		plugin[ga].trackevent(Player, Stop, get(video_name));
+		plugin[video].seek(0);
+		plugin[video].stop();
+	</action>
+<!--   -->
+
+	<scene name="video_scene" onstart="plugin[video].play();">
+		<image>
+			<sphere url="plugin:video" />
+		</image>
+	</scene>
+
+	<scene name="video3d_scene" onstart="plugin[video].play();">
+		<image stereo="true">
+			<sphere url="plugin:video" />
+		</image>
+	</scene>
+
+	<action name="toggler_video">
+		plugin[video].seek(0);
+		plugin[video].stop();
+	</action>
+	<!-- SPECIAL CASE END -->
+
+	<!-- the VR menu - home button, prev/next scene buttons -->
+	<style name="vr_menu_style" depth="800" scale="0.2" distorted="true" ath="0" atv="45" alpha="0.25" visible="false" />
+
+	<!--<hotspot name="vr_menu_bg"   style="vr_menu_style" keep="true" zorder="5" url="../images/back_button.png" width="600" height="120" onover="vr_menu_over();" onout="vr_menu_out();" handcursor="false" />-->
+	<hotspot name="vr_menu_home" style="vr_menu_style" keep="true" zorder="6" url="../images/back_button.png" width="550" height="230" oy="10" onover="vr_menu_over(); delayedcall(0,tween(alpha,0.75,0.1));" onout="vr_menu_out();" startupxml="" onloaded="copy(startupxml, xml.url);" vr_timeout="1000" onclick="video_stop();vr_menu_loadhome();" />
+
+	<hotspot name="vr_play" style="vr_menu_style" keep="true" zorder="6" url="../images/play.png" width="300" height="300" ox="-48" oy="-48" vr_timeout="700" onclick="plugin[video].play();plugin[ga].trackevent(Player, Play, get(video_name));" />
+	<hotspot name="vr_pause" style="vr_menu_style" keep="true" zorder="6" url="../images/pause.png" width="300" height="300" ox="+48" oy="-48" vr_timeout="700" onclick="plugin[video].pause();plugin[ga].trackevent(Player, Pause, get(video_name));" />
+
+
+	<action name="vr_menu_over">
+		callwith(hotspot[vr_menu_bg],   tween(alpha|depth,1.0|650); );
+		callwith(hotspot[vr_menu_home], tween(alpha|depth,0.5|650); );
+		callwith(hotspot[vr_play], tween(alpha|depth,1.0|650); );
+		callwith(hotspot[vr_pause], tween(alpha|depth,1.0|650); );
+	</action>
+
+	<action name="vr_menu_out">
+		if(hotspot[vr_menu].hovering == false,
+			callwith(hotspot[vr_menu_bg],   tween(alpha|depth,0.25|800); );
+			callwith(hotspot[vr_menu_home], tween(alpha|depth,0.25|800); );
+			callwith(hotspot[vr_play], tween(alpha|depth,1.5|800); );
+			callwith(hotspot[vr_pause], tween(alpha|depth,1.5|800); );
+		  );
+	</action>
+
+	<action name="vr_menu_loadhome">
+		set(basedir, '');
+		loadpano('assets/xml/krpano_vr.xml', null, NOPREVIEW|MERGE|KEEPVIEW|KEEPMOVING, BLEND(1));
+		set(webvr.worldscale,1.0);
+		vr_menu_setvisibility(false);
+	</action>
+
+	<action name="vr_menu_setvisibility">
+		set(hotspot[vr_menu_bg].visible,   %1);
+		set(hotspot[vr_menu_home].visible, %1);
+		set(hotspot[vr_play].visible, %1);
+		set(hotspot[vr_pause].visible, %1);
+		if(scene.count GT 1,
+			set(hotspot[vr_menu_bg].width, 600);
+		  ,
+			set(hotspot[vr_menu_bg].width, 320);
+		  );
+	</action>
+
+	<events name="vr_menu_events" keep="true" onviewchange="vr_menu_following();"  />
+
+	<!-- new krpano 1.19 feature: Javascript actions (can be faster than xml actions, HTML5 only) -->
+	<action name="vr_menu_following" type="Javascript" devices="html5"><![CDATA[
+
+		var hs2 = krpano.get("hotspot[vr_menu_home]");
+		var hs4 = krpano.get("hotspot[vr_play]");
+		var hs5 = krpano.get("hotspot[vr_pause]");
+
+		if(!hs2.hovering && !hs4.hovering && !hs5.hovering)
+		{
+			var f = 0.01;	// follow speed factor
+
+			var h = krpano.view.hlookat;
+			var v = krpano.view.vlookat;
+			var hsh = hs2.ath;
+			var hsv = hs2.atv;
+
+			// map to -180 to +180
+			h   = (h  -(h|0))   + (((h|0)  +360180)%360) - 180.0;
+			hsh = (hsh-(hsh|0)) + (((hsh|0)+360180)%360) - 180.0;
+
+			// get the shortest horizontal distance
+			dh = h - hsh;
+			dh += (dh>180) ? -360 : (dh<-180) ? 360 : 0
+
+			// follow slowing horizontally
+			hsh += dh*f;
+
+			// fade out when farther away
+			var a = Math.abs(v - hs2.atv) / 90.0;
+			a = 0.5 * Math.max(1.0 - 2.0*Math.sqrt(a), 0);
+
+			// move up the more looking down
+			v = v + 55.0 - v*1.5;
+			hsv = hsv*(1-f) + v*f;
+
+			// set everything
+			if(!hs4.hovering) hs4.alpha = a;
+			if(!hs5.hovering) hs5.alpha = a;
+			hs2.alpha = a;
+			hs5.ath = hs4.ath = hs2.ath = hsh;
+			hs5.atv = hs4.atv = hs2.atv = hsv;
+		}
+
+	]]></action>
+
+	<!-- a simpler non-VR fallback version for Flash -->
+	<action name="vr_menu_following" devices="flash">
+		copy(h,view.hlookat);
+		copy(v,view.vlookat);
+		mul(dv,v,1.5);
+		add(v,55);
+		sub(v,dv);
+		getlooktodistance(a,h,v);
+		div(a,90);
+		sub(a,0.5,a);
+		Math.min(a,0.5);
+		copy(hs,hotspot[vr_menu_home]);
+		copy(hs.ath,h);
+		copy(hs.atv,v);
+		copy(hs.alpha,a);
+		copy(hs,hotspot[vr_play]);
+		copy(hs.ath,h);
+		copy(hs.atv,v);
+		copy(hs.alpha,a);
+	</action>
+
+	<!-- krpano VR logo -->
+	<hotspot name="entel-logo-front" distorted="true" enabled="false" scale="1.5" url="../images/entel_logo.svg" ath="0" atv="0" ty="-550" /><!--front-->
+	<hotspot name="entel-logo-back" distorted="true" enabled="false" scale="2.0" url="../images/entel_logo.svg" ath="180" atv="0" ty="0" /><!--back-->
+
+	<layer name="entellogo" url="../images/entel_logo_2.png" keep="true" vr="true" align="bottom.right" y="0" x="0" alpha="1.0" width="50" height="50" />
+
+	<!-- start animation -->
+	<action name="init">
+		def(page_array);
+		def(current_video, string);
+		def(page, integer, 0.0);
+		def(max_page, integer, 0.0);
+		def(video_name, string);
+		def(items_x_page, integer, 5.0);
+		def(actual_item_count, integer, 0.0);
+
+		def(cant_item, integer, 5.0);
+
+		def(depth_factor, integer, -250.0);
+		def(thumb_margin, integer, +50.0);
+		def(thumb_pos, integer, -125);
+		def(text_pos, integer, -125);
+
+		def(thumb_depth_show, integer, 500.0);
+		def(thumb_depth, integer, 900.0);
+		def(text_depth, integer, 900.0);
+		def(item_depth, integer, 500.0);
+		def(item_increment, integer, 24.0);
+		def(item_zoom, integer, 90.0);
+		def(control_depth, integer, 500.0);
+		def(thumb_ypos, integer, 75.0);
+
+		def(thumb_width, integer, 170.0);
+		def(thumb_height, integer, 110.0);
+
+		def(item_width, integer, 50.0);
+		def(item_height, integer, 35.0);
+
+		def(control_width, integer, 35.0);
+		def(control_height, integer, 35.0);
+
+		def(initial_items_pos, integer, 300.0);
+		def(initial_controls_pos, integer, -3.0);
+
+	</action>
+
+    <action name="start_vr">
+
+		set(start_ty, 10000);
+		set(start_tt, 3.0);
+
+		if(vr_start_done === true, set(start_ty, 75);set(start_tt, 0.5); , set(vr_start_done, true); );
+
+		for(set(i,0), i LT hotspot.count, inc(i),
+			copy(element, hotspot[get(i)]);
+
+			if((element.style == "thumb"),
+				set(element.onover, null);
+				set(thumb_pos, calc(thumb_pos + thumb_margin));
+				set(items_pos, 0);
+				set(items_count, 0);
+				set(controls_pos, get(thumb_pos));<!-- cambio pagina-->
+				callwith(element, set(onover, toggle_gallery(name) ); set(width, calc(thumb_width)); set(height, calc(thumb_height)); set(ath, calc(thumb_pos)); set(depth, calc(thumb_depth + depth_factor)); copy(ty, start_ty); tween(alpha|ty, 1.0|-20, get(start_tt), easeOutQuad|easeOutQuint, set(enabled,true) ); );
+
+				set(page_array[get(element.name)].page, 0);
+
+				for(set(x,0), x LT hotspot.count, inc(x),
+					copy(items, hotspot[get(x)]);
+					txtsplit(items.name, '_', itemsNames);
+					if((items.style == "item" AND itemsNames[0].value == element.name ),
+						set(items_count, calc(items_count+1));
+					);
+				);
+
+				<!--trace(calc(items_count));-->
+				<!--if(items_count GT 1,
+					set(items_pos, calc((items_pos - (item_increment*(items_count/2)))+(item_increment/2) ) );
+				);-->
+
+				if(items_count GT 1,
+					if(items_count GT 5,
+						set(items_pos, calc((items_pos - (item_increment*(items_x_page/2)))+(item_increment/2) ) );
+					,
+						set(items_pos, calc((items_pos - (item_increment*(items_count/2)))+(item_increment/2) ) );
+					);
+
+				);
+
+			);
+
+			if((element.style == "text"),
+				set(text_pos, calc(text_pos + thumb_margin));
+				callwith(element, set(ath, calc(text_pos)); set(depth, calc(text_depth + depth_factor)); tween(alpha|ty, 1.0|-300.0, get(start_tt), easeOutQuad|easeOutQuint); );
+			);
+
+			<!--if((element.style == "item"),
+				set(element.onover, null);
+				set(items_pos, calc(items_pos+1));
+				callwith(element, set(depth, calc(item_depth + depth_factor)); set(onover, tween(depth, calc((item_depth + depth_factor) - 30), 0.2); tween(zorder, 4.0, 0.2)); set(onout, tween(depth, calc(item_depth + depth_factor), 0.2); tween(zorder, 2.0, 0.2)); set(ath, calc(thumb_pos)); set(width, calc(item_width)); set(height, calc(item_height)); set(ox, calc((item_width * + items_pos) + items_pos)); );
+			);-->
+
+			if((element.style == "item"),
+				set(element.onover, null);
+				callwith(element,
+					set(depth, calc(item_depth + depth_factor));
+					set(onover, tween(depth, calc((item_depth + depth_factor) - item_zoom), 0.2);
+					tween(zorder, 4.0, 0.2));
+					set(onout, tween(depth, calc(item_depth + depth_factor), 0.2);
+					tween(zorder, 2.0, 0.2));
+					set(ath, calc(thumb_pos+items_pos));
+					set(width, calc(item_width));
+					set(height, calc(item_height));
+				);
+				set(items_pos, calc(items_pos+item_increment));
+			);
+
+			if(element.style == "control",
+				if(items_count GT 5,
+					set(controls_pos, calc(controls_pos)); <!-- cambio pagina-->
+					callwith(element, set(ath, calc(ath + controls_pos)); set(width, calc(control_width)); set(height, calc(control_height)); ); <!-- cambio pagina-->
+				,
+					callwith(element, set(visible, false); ); <!-- cambio pagina-->
+				);
+
+			);
+
+		);
+
+	</action>
+
+  <action name="toggle_gallery">
+		trace("INIT PAGE TO 1"); <!-- cambio pagina-->
+
+		trace(page_array);
+
+		set(actual_item_count, 0.0); <!-- cambio pagina-->
+
+		for(set(x,0), x LT hotspot.count, inc(x),
+			copy(items, hotspot[get(x)]);
+			txtsplit(items.name, '_', itemsNames);
+			if((items.style == "item" AND itemsNames[0].value == %1 ),
+				set(actual_item_count, calc(actual_item_count+1));
+			);
+		);
+
+		<!-- set(max_page, calc((actual_item_count / items_x_page)-1));-->
+		Math.ceil(max_page, calc((actual_item_count / items_x_page)-1));
+
+		trace("MAX: ", get(max_page));
+
+		set(actual_thumb_position, -125);
+		set(actual_item_position, 0.0);
+
+		set(actual_thumb_position, calc(hotspot[get(%1)].ath));
+
+		set(initial_position, null);
+		set(cont, 0.0);
+
+		for(set(i,0), i LT hotspot.count, inc(i),
+
+			copy(element, hotspot[get(i)]);
+			txtsplit(element.name, '_', arrayName);
+
+			if(arrayName[0].value != %1,
+
+				if((element.style == "thumb"),
+					callwith(element, set(zorder, 1.0); tween(scale, 1.0, 0.5); tween(ty, -20.0, 0.5); tween(depth, calc(thumb_depth + depth_factor), 0.5, easeOutQuad|easeOutQuint, set(enabled, true)); );
+				);
+
+				if((element.style == "text"),
+					callwith(element, tween(alpha, 1.0, 0.5); );
+				);
+
+				if((element.style == "item"),
+					callwith(element, set(enabled, false); set(zorder, 1.0); set(alpha, 0.0); tween(oy, 30, 0.5); );
+				);
+
+				if((element.style == "control"),
+					callwith(element, set(depth, calc(control_depth + depth_factor)); set(enabled, false); set(zorder, 1.0); set(alpha, 0.0); );
+				);
+
+			,
+				if((element.style == "thumb"),
+					callwith(element, set(zorder, 2.0); tween(scale, 0.7, 0.5); tween(ty, -25.0, 0.5); tween(depth, calc(thumb_depth_show + depth_factor), 0.5, easeOutQuad|easeOutQuint, set(enabled, false)); );
+					trace(get(page_array[get(%1)].page));
+				);
+
+				if((element.style == "text"),
+					callwith(element, tween(alpha, 0.0, 0.7); );
+				);
+
+				if((element.style == "item"),
+					callwith(element, set(enabled, true); set(zorder, 3.0); tween(oy, 25, 0.5););
+				);
+
+				if((element.style == "control"),
+					callwith(element, set(depth, calc(control_depth + depth_factor)); set(enabled, true); set(zorder, 3.0); set(alpha, 1.0); );
+				);
+
+			);
+		);
+
+
+
+		for(set(i,0), i LT hotspot.count, inc(i),
+			copy(videoItem, hotspot[get(i)]);
+
+			txtsplit(videoItem.name, '_', aName);
+			if(aName[0].value == %1,
+					if((videoItem.style == "item"),
+					txtsplit(videoItem.name, 'video', itemNumber);
+					set(number, calc(itemNumber[1].value));
+					set(begin, calc((page_array[get(%1)].page*items_x_page)+1));
+					set(end, calc((begin+items_x_page)-1));
+
+					if((number GE begin) AND (number LE end),
+						callwith(videoItem,	tween(alpha, 1.0, 0.5 ););
+					,
+						callwith(videoItem,	tween(alpha, 0.0, 0.5 ););
+					);
+				);
+			);
+		);
+
+	</action>
+
+	<action name="items_next"> <!-- cambio pagina-->
+		trace("PAGE:", page_array[%1].page);
+		trace("MAX:", get(max_page));
+
+		if(page_array[%1].page LT max_page ,
+			set(page_array[%1].page, calc(page_array[%1].page + 1));
+
+			for(set(i,0), i LT hotspot.count, inc(i),
+				copy(videoItem, hotspot[get(i)]);
+				txtsplit(videoItem.name, '_', arrayName);
+				if(arrayName[0].value == %1,
+					if((videoItem.style == "item"),
+					  txtsplit(videoItem.name, 'video', itemNumber);
+						set(number, calc(itemNumber[1].value));
+						callwith(videoItem,	tween(ath, calc(ath - 120), 0.5, null ););
+					);
+				);
+			);
+
+			for(set(i,0), i LT hotspot.count, inc(i),
+				copy(videoItem, hotspot[get(i)]);
+				txtsplit(videoItem.name, '_', arrayName);
+				if(arrayName[0].value == %1,
+					if((videoItem.style == "item"),
+					  txtsplit(videoItem.name, 'video', itemNumber);
+						set(number, calc(itemNumber[1].value));
+						set(begin, calc((page_array[%1].page*items_x_page)+1));
+						set(end, calc((begin+items_x_page)-1));
+
+						if((number GE begin) AND (number LE end),
+							callwith(videoItem,	tween(alpha, 1.0, 0.5 ););
+						,
+							callwith(videoItem,	tween(alpha, 0.0, 0.5 ););
+						);
+					);
+				);
+			);
+
+		);
+
+
+
+	</action>
+
+	<action name="items_back"> <!-- cambio pagina-->
+
+		if(page_array[%1].page GE 1 ,
+			set(page_array[%1].page, calc(page_array[%1].page - 1));
+
+			for(set(i,0), i LT hotspot.count, inc(i),
+				copy(videoItem, hotspot[get(i)]);
+				txtsplit(videoItem.name, '_', aName);
+				if(aName[0].value == %1,
+						if((videoItem.style == "item"),
+						txtsplit(videoItem.name, 'video', itemNumber);
+						set(number, calc(itemNumber[1].value));
+						callwith(videoItem, tween(ath, calc(ath + 120), 0.5, null); );
+					);
+				);
+			);
+
+			for(set(i,0), i LT hotspot.count, inc(i),
+				copy(videoItem, hotspot[get(i)]);
+				txtsplit(videoItem.name, '_', aName);
+				if(aName[0].value == %1,
+						if((videoItem.style == "item"),
+						txtsplit(videoItem.name, 'video', itemNumber);
+						set(number, calc(itemNumber[1].value));
+						set(begin, calc((page_array[%1].page*items_x_page)+1));
+						set(end, calc((begin+items_x_page)-1));
+
+						if((number GE begin) AND (number LE end),
+							callwith(videoItem,	tween(alpha, 1.0, 0.5 ););
+						,
+							callwith(videoItem,	tween(alpha, 0.0, 0.5 ););
+						);
+
+					);
+				);
+			);
+		);
+
+
+	</action>
+
+	<!-- panel/thumb styles -->
+	<style name="thumb" distorted="true" enabled="false" capture="false" alpha="0" ty="75" ox="0" oy="-10" />
+	<style name="text" distorted="true" enabled="false" capture="false" alpha="0" ty="75" zorder="1" oy="60" atv="0" scale="0.3"/>
+	<style name="item" distorted="true" enabled="false" capture="false" alpha="0" oy="30" atv="0" width="50" height="35" zorder="1" />
+	<style name="control" distorted="true" enabled="false" capture="false" alpha="0" tx="10" oy="80" ath="0" zorder="1" />
+
+	<!-- left panel -->
+	<hotspot name="gallery1" style="thumb" zorder="1" atv="0" url="../images/card1.png" />
+	<hotspot name="gallery1_text" style="text" url="../images/txt_deporte.png" borderwidth="0" autosize="center" backgroundalpha="0.0" oy="60" />
+
+			<!-- video -->
+			<hotspot name="gallery1_video1" style="item" url="../../video/30733/preview/chile_brasil.png" onclick="set(current_video,'video/30733/mp4/1481294709006u0hm4i/116115145016178.mp4');video_load('chile_brasil', '/deporte/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery1_video2" style="item" url="../../video/30721/preview/CHILE_PERU.png" onclick="set(current_video,'video/30721/mp4/1481294709006u0hm4i/11611514432654.mp4');video_load('CHILE_PERU', '/deporte/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery1_video3" style="item" url="../../video/30709/preview/CHILE_BOLIVIA_RESUMEN.png" onclick="set(current_video,'video/30709/mp4/1481294709006u0hm4i/11611514357738.mp4');video_load('CHILE_BOLIVIA_RESUMEN', '/deporte/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery1_video4" style="item" url="../../video/30641/preview/CHIE_ARGENTINA_RESUMEN.png" onclick="set(current_video,'video/30703/mp4/1481294709006u0hm4i/116115143258625.mp4');video_load('CHIE_ARGENTINA_RESUMEN', '/deporte/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+
+			<!-- control -->
+			<hotspot name="gallery1_back" ath="-10" style="control" url="../images/back.png" onclick="items_back(gallery1)"  />
+			<hotspot name="gallery1_next" ath="+10" style="control"  url="../images/next.png" onclick="items_next(gallery1)" />
+
+	<!-- center panel -->
+	<hotspot name="gallery2" style="thumb" zorder="1" atv="0" url="../images/card_festival.png" />
+	<hotspot name="gallery2_text" style="text" borderwidth="0" url="../images/txt_festival.png" autosize="center" backgroundalpha="0.0" />
+			<!-- video -->
+			<hotspot name="gallery2_video2" style="item" url="../../video/32095/preview/MONLAFERTTE.png" onclick="set(current_video,'video/32095/mp4/1481294709006u0hm4i/1172310620502.mp4');video_load('RESUMEN', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video5" style="item" url="../../video/32067/preview/ULTIMANOCHE.png" onclick="set(current_video,'video/32113/mp4/1481294709006u0hm4i/11724183750542.mp4');video_load('RESUMEN', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video6" style="item" url="../../video/32022/preview/AMERICO.png" onclick="set(current_video,'video/32022/mp4/1481294709006u0hm4i/11711104648210.mp4');video_load('GALA1', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video8" style="item" url="../../video/32040/preview/MALUMA.png" onclick="set(current_video,'video/32040/mp4/1481294709006u0hm4i/11711105816268.mp4');video_load('GALA1', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video9" style="item" url="../../video/32049/preview/RESUMEN5.png" onclick="set(current_video,'video/32049/mp4/1481294709006u0hm4i/1171111450585.mp4');video_load('GALA1', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video10" style="item" url="../../video/31962/preview/jajacalderon.png" onclick="set(current_video,'video/31961/mp4/1481294709006u0hm4i/1171615259873.mp4');video_load('GALA1', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video12" style="item" url="../../video/31953/preview/RESUMEN4.png" onclick="set(current_video,'video/32104/mp4/1481294709006u0hm4i/11724181113992.mp4');video_load('RESUMEN', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video13" style="item" url="../../video/31944/preview/RESUMEN3.png" onclick="set(current_video,'video/31944/mp4/1481294709006u0hm4i/11715114212235.mp4');video_load('RESUMEN', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video14" style="item" url="../../video/31871/preview/rioromas.png" onclick="set(current_video,'video/31871/mp4/1481294709006u0hm4i/11714121915954.mp4');video_load('GALA1', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video15" style="item" url="../../video/31927/preview/mono_sanchez.png" onclick="set(current_video,'video/31927/mp4/1481294709006u0hm4i/1171416655918.mp4');video_load('RESUMEN', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video16" style="item" url="../../video/31815/preview/chiqui.png" onclick="set(current_video,'video/31815/mp4/1481294709006u0hm4i/11714115830835.mp4');video_load('GALA1', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video17" style="item" url="../../video/31702/preview/LADECADENTES.png" onclick="set(current_video,'video/31702/mp4/1481294709006u0hm4i/11712143241756.mp4');video_load('GALA2', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />			
+			<hotspot name="gallery2_video18" style="item" url="../../video/31715/preview/sinbandera.png" onclick="set(current_video,'video/31715/mp4/1481294709006u0hm4i/1171315332953.mp4');video_load('SINBANDERA', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video19" style="item" url="../../video/31684/preview/resumen_primeranoche.png" onclick="set(current_video,'video/31684/mp4/1481294709006u0hm4i/11712141546291.mp4');video_load('PRIMERANOCHE', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video20" style="item" url="../../video/31693/preview/juan_pablolopez.png" onclick="set(current_video,'video/31693/mp4/1481294709006u0hm4i/11712142419447.mp4');video_load('GALA2', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video21" style="item" url="../../video/31658/preview/MEJORES_VESTIDAS.png" onclick="set(current_video,'video/31658/mp4/1481294709006u0hm4i/1171193719601.mp4');video_load('GALA2', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video22" style="item" url="../../video/31552/preview/resumen_gala.png" onclick="set(current_video,'video/31552/mp4/1481294709006u0hm4i/11716144014880.mp4');video_load('GALA1', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery2_video23" style="item" url="../../video/31724/preview/resumen.png" onclick="set(current_video,'video/31724/mp4/1481294709006u0hm4i/11713163627236.mp4');video_load('RESUMEN', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+				
+			<!-- control -->
+
+			<hotspot name="gallery2_back" ath="-10" style="control" url="../images/back.png" onclick="items_back(gallery2)" /><!-- cambio pagina-->
+			<hotspot name="gallery2_next" ath="+10" style="control" url="../images/next.png" onclick="items_next(gallery2)" /><!-- cambio pagina-->
+
+	<!-- right panel -->
+	<hotspot name="gallery3" style="thumb" zorder="1" atv="0" url="../images/card3.png"/>
+	<hotspot name="gallery3_text" style="text" url="../images/txt_entretencion.png" borderwidth="0" autosize="center" backgroundalpha="0.0" oy="60" />
+
+			<!-- video -->
+			<hotspot name="gallery3_video1" style="item" url="../../video/30751/preview/TORRE_ENTEL.png" onclick="set(current_video,'video/30751/mp4/1481294709006u0hm4i/116115155657260.mp4');video_load('TORRE_ENTEL', '/entretencion/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery3_video2" style="item" url="../../video/30745/preview/MOTORDROME_DISCOVERY.png" onclick="set(current_video,'video/30745/mp4/1481294709006u0hm4i/116115155116517.mp4');video_load('MOTORDROME_DISCOVERY', '/entretencion/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			
+			<!--videoambar -->
+			<hotspot name="gallery3_video3" style="item" url="../../video/30609/preview/AMBAR_1ER_CAP.png" onclick="set(current_video,'video/30691/mp4/1481294709006u0hm4i/116115123142781.mp4');video_load('AMBAR_1ER_CAP', '/entretencion/');changepano( loadscene(video3d_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery3_video4" style="item" url="../../video/30739/preview/AMBAR_2DO_CAP.png" onclick="set(current_video,'video/30739/mp4/1481294709006u0hm4i/116115153546661.mp4');video_load('AMBAR_2DO_CAP', '/entretencion/');changepano( loadscene(video3d_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery3_video5" style="item" url="../../video/30813/preview/00001_preview.png" onclick="set(current_video,'video/30813/mp4/1481554983445sfrzph/116112144751804.mp4');video_load('AMBAR_3DO_CAP', '/entretencion/');changepano( loadscene(video3d_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			
+			
+			<!-- control -->
+			<hotspot name="gallery3_back" ath="-10" style="control" url="../images/back.png" onclick="items_back(gallery3)" />
+			<hotspot name="gallery3_next" ath="+10" style="control" url="../images/next.png" onclick="items_next(gallery3)" />
+
+
+	<!-- right panel -->
+	<hotspot name="gallery4" style="thumb" zorder="1" atv="0" url="../images/card5.png"/>
+	<hotspot name="gallery4_text" style="text" url="../images/txt_cultura.png" borderwidth="0" autosize="center" backgroundalpha="0.0" oy="60" />
+
+			<!-- video -->
+			<hotspot name="gallery4_video1" style="item" url="../../video/32307/preview/TsuKijiFishMarket.png" onclick="set(current_video,'video/32307/mp4/1481294709006u0hm4i/11725175117783.mp4');video_load('RESUMEN', '/festival/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery4_video2" style="item" url="../../video/30801/preview/00001_preview.png" onclick="set(current_video,'video/30801/mp4/1481554983445sfrzph/11611214386416.mp4');video_load('cultura_1', '/cultura/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+			<hotspot name="gallery4_video3" style="item" url="../../video/30819/preview/00005_preview.png" onclick="set(current_video,'video/30819/mp4/1481554983445sfrzph/116113103451543.mp4');video_load('cultura_2', '/cultura/');changepano( loadscene(video_scene, null, MERGE|KEEPVIEW|KEEPMOVING, BLEND(1)); );" />
+
+			<!-- control -->
+
+			<hotspot name="gallery4_back" ath="-10" style="control" url="../images/back.png" onclick="items_back(gallery4)" />
+			<hotspot name="gallery4_next" ath="-10" style="control" url="../images/next.png" onclick="items_next(gallery4)" />
+
+
+	<!-- pano changing actions -->
+	<action name="changepano">
+		for(set(i,0), i LT hotspot.count, inc(i),
+			if(hotspot[get(i)].style == 'thumb', set(hotspot[get(i)].enabled, true); );
+			if(hotspot[get(i)].name != 'vr_cursor', tween(hotspot[get(i)].alpha, 0.0, 0.25); );
+		  );
+		delayedcall(0.25, %1; vr_menu_setvisibility(true); );
+	</action>
+
+
+	<action name="nextscene_loop">
+		if(xml.scene != null AND scene.count GT 1,
+			add(newsceneindex, scene[get(xml.scene)].index, %1);
+			sub(lastsceneindex, scene.count, 1);
+			if(newsceneindex LT 0, copy(newsceneindex,lastsceneindex));
+			if(newsceneindex GT lastsceneindex, set(newsceneindex,0));
+			loadscene(get(scene[get(newsceneindex)].name), null, NOPREVIEW|MERGE|KEEPVIEW|KEEPMOVING, BLEND(1));
+		  );
+	</action>
+</krpano>

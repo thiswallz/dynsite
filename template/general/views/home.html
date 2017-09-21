@@ -1,0 +1,44 @@
+<div  class="homeView appear" >
+    <update-title title="{{siteData.descripcion}}"></update-title>
+    <toaster-container></toaster-container>
+    <!-- header-->
+    <div class="headerWrapper"  id="bc_headerWrapper" >
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <div class="logo" id="bc_clientLogo" style="width:30%" ></div>
+                    <h3 class="title" id="bc_clientTitle" ng-click="custom.pop()">(Click){{siteData.titulo}} </h3>
+
+                    
+                </div>
+                <div class="hidden-xs col-sm-4 col-md-4 col-lg-4 text-right">
+
+
+                    <a target="_blank" href="http://www.viddeo.com/" style="text-decoration: none;">
+                        <span class="poweredBy"><img src="assets/img/powered_viddeo.svg"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mainWraper" id="bc_mainWraper" >
+        <div class="container">
+            
+            <!-- big thumbnail-->
+            <bcr-videos-collection id-block="panel_big" brc-collections="siteData.collections" brc-panel="siteData.site_setting" brc-player-skin="playerOptions" brc-player-auto-start="{{siteData.autostart.home}}" brc-items="1" brc-size="xl" brc-show-title=false on-finish-loading="onCollectionLoaded()"
+                favs="favsInCollections"></bcr-videos-collection>
+            <!-- menu -->
+            <div ng-include="getUrl('partials/_menu.html')"></div>
+            <!-- medium thumbnails-->
+            <bcr-videos-collection id-block="panel_large" brc-collections="siteData.collections" brc-panel="siteData.site_setting" brc-items="3" brc-class="col-sm-6 col-lg-4 thumbnailVideo medium" brc-size="l" brc-show-title=true on-finish-loading="onCollectionLoaded()"
+                favs="favsInCollections"></bcr-videos-collection>
+            <!-- small thumbnails-->
+            <bcr-videos-collection id-block="panel_medium" brc-collections="siteData.collections" brc-panel="siteData.site_setting" brc-items="8" brc-class="col-sm-4 col-lg-3 thumbnailVideo small" brc-size="m" brc-pagination=true brc-show-title=true on-finish-loading="onCollectionLoaded()"
+                favs="favsInCollections"></bcr-videos-collection>
+        </div>
+
+    </div>
+               
+    <!-- footer-->
+    <div ng-include="getUrl('partials/_footer.html')"></div>
+</div>

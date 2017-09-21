@@ -1,0 +1,27 @@
+<a id="menuTrigger" class="hidden-md hidden-lg"><img src="assets/img/menu.svg"></a>
+
+<div class="row section menu">
+    <div class="col-lg-12">
+        <ul>
+            <li class="hidden-lg hidden-md mobile"></li>
+            <li class="menuOption" ng-click="signOut()" ng-if="isLogin"><a>SIGN OUT</a></li>
+            <li class="menuOption" ng-class="{'selected': idSelectedCollection==undefined && !viewingLive}"><a ng-href="{{root_path}}">Inicio</a></li>
+            <li class="menuOption" ng-class="{'selected': viewingLive}" ng-if="siteData.live == 1"><a ng-href="{{root_path}}live">En Vivo</a></li>
+            <li class="menuOption" ng-class="{'hidden-lg hidden-md': $index>(maxVisibleOptionsmenu-1), 'selected': menu.id_coleccion==idSelectedCollection}" ng-repeat="menu in siteData.menus">
+                <a ng-href="{{root_path}}collection/{{menu.id_coleccion}}">{{menu.nombre}}</a>
+            </li>
+            <li class="hidden-xs hidden-sm wrapperDropdown" ng-show="siteData.menus.length>maxVisibleOptionsmenu">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="innerDDM" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">TODAS <span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right" aria-labelledby="innerDDM" id="dropdown-menu">
+                        <li class="menuOption"><a ng-href="{{root_path}}">Inicio</a></li>
+                        <li class="menuOption" ng-if="siteData.live == 1"><a ng-href="{{root_path}}live">En Vivo</a></li>
+                        <li class="innerMenu" ng-repeat="menu in siteData.menus  | orderBy:'priority'">
+                            <a ng-href="{{root_path}}collection/{{menu.id_coleccion}}">{{menu.nombre}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

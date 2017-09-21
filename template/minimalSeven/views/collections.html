@@ -1,0 +1,40 @@
+<div >
+
+    <!-- header-->
+    <div class="headerWrapper small" id="bc_headerWrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <a href="{{root_path}}">
+                        <div class="logo small" id="bc_clientLogo"  ></div>
+                    </a>
+                    <h3 class="title" id="bc_clientTitle">{{siteData.titulo}}</h3>
+                </div>
+                <div class="hidden-xs col-sm-4 col-md-4 col-lg-4 text-right">
+                    <a target="_blank" href="http://www.viddeo.com/" style="text-decoration: none;">
+                        <span class="poweredBy">POWERED BY</span>
+                        <span class="broadcaster">VIDDEO</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- menu -->
+    <div ng-include="getUrl('partials/_menu.html')"></div>
+
+    <div class="mainWraper" id="bc_mainWraper">
+        <div class="container">
+
+            <!-- medium thumbnails-->
+            <div class="row headerSection">
+                <div class="col-lg-12 title">Videos / {{menuName}}
+                </div>
+            </div>
+            <!-- collection directive by id collection -->
+            <bcr-videos-collection id-collection="idSelectedCollection" brc-collections='siteData.collections' brc-items="12" brc-class="col-sm-4 col-lg-3 thumbnailVideo small" brc-size="m" brc-pagination=true brc-show-title=false></bcr-videos-collection>
+        </div>
+    </div>
+    <!-- footer-->
+    <div ng-include="getUrl('partials/_footer.html')"></div>
+</div>

@@ -1,0 +1,9 @@
+<div class="row headerSection"><div class="col-lg-12 title">Destacados del mes</div></div>
+<div class="row section">
+	<div class="col-sm-6 col-lg-4 thumbnailVideo medium" ng-repeat="video in featuredVideos">
+		<a href="{{root_path}}video/{{video.alias}}" class="linkVideo" style="background-image:url({{s3UrlPrefix}}{{video.ruta}}/{{video.preview_l}});"></a>
+	  <div class="social"><span class="views svgFallback">{{getVideoExtraData(video.video_id_video, 'v')}}</span><span class="likes svgFallback" ng-class="{'liked': isLikedVideo(video.video_id_video)}">{{getVideoExtraData(video.video_id_video, 'l')}}</span></div>
+		<h3>{{video.nombre}}</h3>
+		<p class="paragraph_4_lines">{{video.descripcion}}</p>
+	</div>
+</div>

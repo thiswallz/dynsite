@@ -1,0 +1,79 @@
+<div ng-controller="loginGeneralCtrl">
+    <div class="form-group" ng-init="username='site'"></div>
+    <div class="statusPopup">
+        <div class="avatar customizable" id="bc_clientLogo"></div>
+        <div class="statusReqCredentials">
+
+            <div class="msgBox" id="private1" ng-if="!isCustomValidate && !isCustomSendMail && !isCustomRecoverPassword && !isCustomRecoverSendMail">
+                <div class="content">
+                    <h1>Acceso Personalizado</h1>
+                    <p>Por favor, introduzca su e-mail</p>
+                    <form name="formloginCustomValidate" role="form" novalidate>
+                        <div class="iconPrefix user"><input type="text" name="email" id="email" ng-model="loginValidateCustom.email" required ng-pattern="validateMail" placeholder="usuario@company.com"></div>
+                        <label ng-if="formloginCustomValidate.email.$dirty && formloginCustomValidate.email.$error || errorValidateLogin">
+                            <span ng-show="formloginCustomValidate.email.$dirty && formloginCustomValidate.email.$error.required" class="help-block">Correo electronico es requerido</span>
+                            <span ng-show="formloginCustomValidate.email.$dirty && formloginCustomValidate.email.$error.pattern" class="help-block">¡Has ingresado una dirección de e-mail no válida!</span>
+                            <span ng-show="errorValidateLogin" class="help-block">{{errorValidateLogin}}</span>
+                        </label>
+                        <a class="button" ng-click="loginCustomValidate()" ng-class="{'disabled':formloginCustomValidate.$invalid || dataLoadingValidateCustom}">Enter</a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="msgBox" id="private2" ng-if="isCustomValidate && !isCustomSendMail && !isCustomRecoverPassword && !isCustomRecoverSendMail">
+                <div class="content">
+                    <h1>Ingresar</h1>
+                    <p>Ingresa tu nombre de usuario y contraseña</p>
+                    <form name="formLoginCustom" role="form" novalidate>
+                        <div class="iconPrefix user"><input type="email" name="email_" id="email_login" ng-model="loginDataCustom.email" required ng-pattern="validateMail" placeholder="usuario@company.com" /></div>
+                        <label ng-if="formLoginCustom.email_.$dirty">
+                                <span ng-show="formLoginCustom.email_.$dirty && formLoginCustom.email_.$error.required" class="help-block">E-mail es requerido</span>
+                                <span ng-show="formLoginCustom.email_.$dirty && formLoginCustom.email_.$error.pattern" class="help-block">¡Has ingresado una dirección de e-mail no válida!</span>
+                            </label>
+                        <div class="iconPrefix pwd"><input type="password" name="password_" id="password_login" ng-model="loginDataCustom.password" placeholder="contraseña" required /></div>
+                        <label ng-if="formLoginCustom.password_.$dirty">
+                                <span ng-show="formLoginCustom.password_.$dirty && formLoginCustom.password_.$error.required" class="help-block">se requiere contraseña</span>
+                                <span ng-show="formLoginCustom.password_.$dirty && formLoginCustom.password_.$error.pattern" class="help-block">La contraseña debe tener solamente caracteres alfanuméricos</span>
+                            </label>
+                        <div ng-show="errorLoginCustom" class="errorNotify">{{errorLoginCustom}}</div>
+                        <a class="button" ng-click="loginCustom()" ng-class="{'disabled':formLoginCustom.$invalid || dataLoadingLoginCustom}">Ingresar</a>
+                        <a class="button" ng-click="loginCustomRecoverForm()">Recuperar contraseña</a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="msgBox wide" id="private3" ng-if="isCustomSendMail">
+                <div class="content">
+                    <h1>¡Registro exitoso!</h1>
+                    <p>En algunos instantes recibirá un correo electrónico confirmando el acceso.<br>Una vez confirmada, podrá acceder al sitio usando el nombre de usuario y contraseña que usted indicó durante el registro.</p>
+                    <a class="button" ng-click="loginCustomAccess()">Acceder ⟶</a>
+                </div>
+            </div>
+
+            <div class="msgBox" id="private4" ng-if="isCustomRecoverPassword">
+                <div class="content">
+                    <h1>¿Olvidaste tu contraseña?</h1>
+                    <p>Por favor, introduzca su e-mail</p>
+                    <form name="formLoginCustomRecoverPassword" role="form" novalidate>
+                        <div class="iconPrefix user"><input type="text" name="emailRecover" id="emailRecover" ng-model="loginRecoverPassword.email" required ng-pattern="validateMail" placeholder="usuario@company.com"></div>
+                        <label ng-if="formLoginCustomRecoverPassword.emailRecover.$dirty && formLoginCustomRecoverPassword.emailRecover.$error || errorRecoverPassword">
+                            <span ng-show="formLoginCustomRecoverPassword.emailRecover.$dirty && formLoginCustomRecoverPassword.emailRecover.$error.required" class="help-block">Correo electronico es requerido</span>
+                            <span ng-show="formLoginCustomRecoverPassword.emailRecover.$dirty && formLoginCustomRecoverPassword.emailRecover.$error.pattern" class="help-block">¡Has ingresado una dirección de e-mail no válida!</span>
+                            <span ng-show="errorRecoverPassword" class="help-block">{{errorRecoverPassword}}</span>
+                        </label>
+                        <a class="button" ng-click="loginCustomRecoverPassword()" ng-class="{'disabled':formLoginCustomRecoverPassword.$invalid || dataLoadingRecoverPassword}">Enter</a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="msgBox wide" id="private5" ng-if="isCustomRecoverSendMail">
+                <div class="content">
+                    <h1>Recuperar contraseña</h1>
+                    <p>En algunos instantes recibirá un correo electrónico con los datos de acceso de su cuenta.<br>Una vez confirmada, podrá acceder al sitio usando el nombre de usuario y contraseña.</p>
+                    <a class="button" ng-click="loginCustomAccess()">Acceder ⟶</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

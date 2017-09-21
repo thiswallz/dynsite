@@ -1,0 +1,66 @@
+<div   ng-cloak>
+
+    <div ng-controller="liveCtrl" class="mainWraper" id="bc_mainWraper"  >
+        <div class="container-fluid viddeoHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 ribbon">
+                        <img src="app/views/live/img/viddeoLive_logo.svg" class="logo">
+                        <div class="dropdown share">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                SHARE
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                <li><a class="twitter" socialshare socialshare-provider="twitter" socialshare-text="{{selectedVideo.nombre}}" socialshare-url="{{urlSite}}">Twitter</a></li>
+                                <li>
+                                    <a class="facebook" socialshare socialshare-provider="facebook" socialshare-via="306076579750092" socialshare-url="{{urlSite}}" socialshare-text="{{selectedVideo.nombre}}" socialshare-description="{{selectedVideo.descripcion}}" socialshare-media="{{selectedVideo.preview}}"
+                                        socialshare-type="feed" socialshare-source="{{urlSite}}" socialshare-caption="{{siteData.alias}}">Facebook</a>
+                                </li>
+                                <li><a class="mail" href="mailto:?Subject={{siteData.titulo}}&body={{urlSite | escapeHTML}}">Send link</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row header">
+                <div class="col-lg-12 cover" id="bc_headerWrapper"  ></div>
+                <div class="col-lg-12 title">
+                    <div class="avatar" id="bc_clientLogo" ></div>
+                    <span class="desc">{{siteData.titulo}}</span>
+                    <!--<span class="views">27 TOTAL VIEWS</span>-->
+                </div>
+            </div>
+            <div class="row content" ng-class="{'shortTT':layout==2}">
+                <div class="video" ng-class="{'col-md-8':twitterVisible, 'col-md-12':!twitterVisible}">
+                    <div class="media">
+                        <jwplayer ng-show="!player360" ng-src="{{fileToPlaySelected}}" player-options="optionsPlayerSelected" player-id="playerSelected"></jwplayer>
+                        <div ng-show="player360" class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" ng-src="{{iframeFixSrc}}"></iframe>
+                        </div>
+                        <input type="hidden" id="playerName" value="playerSelected">
+                        <input type="hidden" id="videoId" value="{{selectedVideo.video_id_video}}">
+                    </div>
+
+                    <!--large twitter timeline-->
+                    <div ng-if="layout==1" ng-include="getUrl('views/_featured.html')"></div>
+                </div>
+                <div class="col-md-4" >
+                    <zg-dyn-js idc="cmp_section_2"></zg-dyn-js>
+                </div>
+
+                <!--short twitter timeline-->
+                <div ng-if="layout==2" class="col-lg-12 pd0">
+                    <div ng-include="getUrl('views/_featured.html')"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer-->
+        <div ng-include="getUrl('partials/_footer.html')"></div>
+
+    </div>
+</div>

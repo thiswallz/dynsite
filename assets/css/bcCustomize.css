@@ -1,0 +1,171 @@
+div.bcCustomize {
+  margin-top: 20px;
+  margin-left: 20px;
+  width: 370px;
+  background-color: rgba(255, 255, 255, 0.96);
+  color: #888 !important;
+  position: absolute;
+  padding: 25px;
+  box-shadow: 0px 0px 10px rgba(88, 88, 88, 0.62);
+  border-radius: 0 8px 8px 8px;
+  z-index: 1500; }
+  div.bcCustomize p#bc_handler {
+    cursor: move; }
+  div.bcCustomize label {
+    display: block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: normal; }
+    div.bcCustomize label.fileUpload {
+      text-transform: none;
+      display: inline-block !important;
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: top; }
+      div.bcCustomize label.fileUpload:hover {
+        background-color: #E2E2E2; }
+      div.bcCustomize label.fileUpload input.upload {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0); }
+  div.bcCustomize input[type='text'] {
+    border-radius: 0;
+    margin-bottom: 20px; }
+    div.bcCustomize input[type='text'].color {
+      width: 90%;
+      display: inline-block; }
+    div.bcCustomize input[type='text'].urlBg {
+      width: 257px;
+      display: inline-block; }
+  div.bcCustomize input[type='color'] {
+    border-radius: 0;
+    width: 10%;
+    display: inline-block;
+    padding: 0;
+    float: right;
+    border: 0;
+    margin-top: -4px;
+    height: 41px;
+    width: 31px;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none; }
+  div.bcCustomize .bcRadios, div.bcCustomize .bgRepeatRadios {
+    margin-bottom: 20px; }
+  div.bcCustomize a.close {
+    float: right;
+    font-size: 15px;
+    color: #9C9C9C;
+    opacity: 1;
+    text-shadow: none; }
+  div.bcCustomize p {
+    color: inherit !important; }
+  div.bcCustomize a.setButtons {
+    padding: 6px 9px;
+    border: 1px solid #CCC;
+    color: #9E9E9E;
+    text-decoration: none;
+    height: 34px;
+    width: 30px;
+    display: inline-block;
+    vertical-align: middle; }
+    div.bcCustomize a.setButtons.ok {
+      border-left: 0;
+      border-right: 0; }
+    div.bcCustomize a.setButtons:hover {
+      background-color: #E2E2E2; }
+  div.bcCustomize .footer {
+    text-align: right; }
+    div.bcCustomize .footer a.button {
+      color: #FFF;
+      text-decoration: none;
+      background-color: #1B75C3;
+      border-radius: 5px;
+      padding: 10px 20px;
+      text-decoration: none;
+      cursor: pointer; }
+  div.bcCustomize:after {
+    content: ' ';
+    position: absolute;
+    height: 0;
+    width: 0;
+    border: 10px solid transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.96);
+    border-left-color: rgba(255, 255, 255, 0.96);
+    top: -20px;
+    left: 0px; }
+  div.bcCustomize.bottom {
+    border-radius: 8px 8px 8px 0px; }
+    div.bcCustomize.bottom:after {
+      top: auto;
+      border-bottom-color: transparent;
+      border-top-color: rgba(255, 255, 255, 0.96);
+      bottom: -20px; }
+  div.bcCustomize hr {
+    margin-top: 15px;
+    margin-bottom: 15px; }
+  div.bcCustomize .inputBtnSection {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 0;
+    width: 100%; }
+    div.bcCustomize .inputBtnSection .disableInputField {
+      display: inline-block;
+      vertical-align: top;
+      width: 70%; }
+    div.bcCustomize .inputBtnSection .uploadBtn {
+      display: inline-block;
+      background: transparent;
+      padding: 6px 9px;
+      border: 1px solid #CCCCCC;
+      border-left: none;
+      color: #9E9E9E;
+      text-decoration: none;
+      font-size: 14px; }
+  div.bcCustomize .alert.alert-warning {
+    border-radius: 0;
+    margin-left: -25px;
+    margin-right: -25px; }
+
+#bcTmpFileContainer {
+  display: none; }
+
+.editHandler {
+  position: absolute;
+  margin-left: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  z-index: 2; }
+  .editHandler:hover {
+    background-color: transparent !important; }
+    .editHandler:hover:before {
+      content: normal !important; }
+
+.saver {
+  background-color: #888888;
+  position: fixed;
+  top: -52px;
+  right: 50px;
+  z-index: 3;
+  border-radius: 0 0 6px 6px;
+  transition: top 1s; }
+  .saver.show {
+    top: 0; }
+  .saver a {
+    padding: 15px;
+    display: inline-block; }
+    .saver a:first-of-type {
+      border-radius: 0 0 0 6px; }
+    .saver a:last-of-type {
+      border-radius: 0 0 6px 0; }
+    .saver a:hover {
+      background-color: #5a5a5a; }

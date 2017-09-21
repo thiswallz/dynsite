@@ -1,0 +1,120 @@
+<div>
+
+
+    <div ng-include="getUrl('partials/_genericPopups.html')"></div>
+
+    <div ng-controller="liveCtrl" class="mainWraper" id="bc_mainWraper"  >
+        <div class="container-fluid viddeoHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 ribbon">
+                        <img src="{{getUrl('assets/img/viddeoLive_logo.svg')}}" class="logo">
+                        <div class="dropdown share">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                SHARE
+                                <span class="caret"></span>
+                            </button>
+                            <button class="btn btn-default" ng-click="signOut()" ng-if="isLogin">SIGN OUT</button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                <li><a class="twitter" socialshare socialshare-provider="twitter" socialshare-text="{{featuredVideoCollection.nombre}}" socialshare-url="{{urlSite}}">Twitter</a></li>
+                                <li><a class="facebook" socialshare socialshare-provider="facebook" socialshare-via="306076579750092" socialshare-url="{{urlSite}}" socialshare-text="{{featuredVideoCollection.nombre}}" socialshare-description="{{featuredVideoCollection.descripcion}}"
+                                        socialshare-media="{{siteData.url_scheme}}{{cdnUrl}}{{featuredVideoCollection.ruta}}/{{featuredVideoCollection.preview_xl}}" socialshare-type="feed" socialshare-source="http:{{cdnUrl}}{{featuredVideoCollection.ruta}}/{{featuredVideoCollection.preview_xl}}"
+                                        socialshare-caption="{{siteData.alias}}">Facebook</a></li>
+                                <li><a class="mail" href="mailto:?Subject={{siteData.titulo}}&body={{urlSite | escapeHTML}}">Send link</a></li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row header">
+                <div class="col-lg-12 cover" id="bc_headerWrapper"  ></div>
+                <div class="col-lg-12 title">
+                    <div class="avatar" id="bc_clientLogo" ></div>
+                    <span class="desc">{{siteData.titulo}}</span>
+                    <!--<span class="views">27 TOTAL VIEWS</span>-->
+                </div>
+            </div>
+            <div class="row content" ng-class="{'shortTT':layout==2}">
+               
+                <div class="video" ng-class="{'col-md-8':twitterVisible, 'col-md-12':!twitterVisible}">
+
+                    <div class="media">
+                        <div ng-if="(channelActivo == 1 && !cronometro) || startEvent">
+                            <jwplayer ng-src="{{fileToPlayLive}}" player-options="optionsPlayerLive" player-id="playerLive"></jwplayer>
+
+                    <br>
+                        </div>
+                        <div class="chronometer" ng-if="cronometro && channelActivo == 1 && !startEvent" style="background-image:url({{siteData.channel.imgPathPoster}})">
+                            <div timer-controls>
+                                <timer end-time="endTime" finish-callback="finished();">
+                                    <div class="row mg0">
+                                        <div class="hidden-xs col-sm-2"></div>
+                                        <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-12 tmUnit">{{ddays}}</div>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-12 tmUnit">{{hhours}}</div>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-12 tmUnit">{{mminutes}}</div>
+                                        </div>
+                                        <div class="col-xs-3 col-sm-2">
+                                            <div class="col-xs-12 tmUnit">{{sseconds}}</div>
+                                        </div>
+                                        <div class="hidden-xs col-sm-2"></div>
+                                    </div>
+                                    <div class="row mg0">
+                                        <div class="hidden-xs col-sm-2"></div>
+                                        <div class="col-xs-3 col-sm-2"><span class="tmLabel">day{{daysS}}</span></div>
+                                        <div class="col-xs-3 col-sm-2"><span class="tmLabel">hour{{hoursS}}</span></div>
+                                        <div class="col-xs-3 col-sm-2"><span class="tmLabel">minute{{minutesS}}</span></div>
+                                        <div class="col-xs-3 col-sm-2"><span class="tmLabel">second{{secondsS}}</span></div>
+                                        <div class="hidden-xs col-sm-2"></div>
+                                    </div>
+                                </timer>
+                            </div>
+                            <div class="info">
+                                <h1>Tiempo para comenzar</h1>
+                                <p>Este evento pronto estará disponible <br class="visible-xs">para su reproducción</p>
+                            </div>
+                        </div>
+
+                        <div class="msgStatus" ng-if="siteData.channel.borrado==0">
+                            <div class="info">
+                                <h1>¡Evento ha sido eliminado!</h1>
+                                <p>Este evento ya no está disponible <br class="visible-xs">para su reproducción</p>
+                            </div>
+                        </div>
+
+                        <div class="msgStatus" ng-if="siteData.channel.publicado==0 && siteData.channel.borrado!=0">
+                            <div class="info">
+                                <h1>¡Evento no está disponible!</h1>
+                                <p>Este evento ya no está disponible <br class="visible-xs">para su reproducción</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--large twitter timeline-->
+                    <div ng-if="layout==1" ng-include="getUrl('views/_featured.html')"></div>
+                </div>
+                <div class="col-md-4 ">   <!-- ng-show="twitterVisible">-->
+                    <zg-dyn-js idc="cmp_section_1"  extra="opciones"></zg-dyn-js>
+                    
+                     <zg-dyn-js idc="cmp_section_2"></zg-dyn-js>
+
+                     <zg-dyn-js idc="cmp_section_3"></zg-dyn-js>
+                </div>
+                <!--short twitter timeline-->
+                <div ng-if="layout==2" class="col-lg-12 pd0">
+                    <div ng-include="getUrl('views/_featured.html')"></div>
+                </div>
+            </div>
+        </div>
+        <!-- footer-->
+        <div ng-include="getUrl('partials/_footer.html')"></div>
+
+    </div>
+</div>

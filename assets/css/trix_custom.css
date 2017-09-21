@@ -1,0 +1,86 @@
+.trix-events {
+    margin-top: 5px;
+}
+.trix-events ul {
+    list-style: outside none none;
+    margin: 0;
+    padding-left: 0;
+}
+.trix-events .indicator {
+    background-color: #15965a;
+    border-radius: 50px;
+    height: 12px;
+    margin-right: 5px;
+    width: 12px;
+    transition: background-color 0.5s ease 0s;
+}
+.trix-events .label {
+    font-size: 14px;
+    transition: color 0.5s ease 0s;
+}
+.trix-events .active .indicator {
+    background-color: red;
+}
+.trix-events .active .label {
+    color: red;
+}
+.trix-events li {
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+.trix-events span {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+}
+trix-toolbar .dialogs .dialog {
+    border: 1px solid #d6d6d6;
+    border-radius: 2px;
+}
+.dialog .button_group {
+    margin-top: 0;
+}
+.link_url_fields > input {
+    border-color: #d6d6d6 !important;
+    border-radius: 2px !important;
+}
+.button_groups {
+    border-color: #d6d6d6 #d6d6d6 transparent;
+    border-image: none;
+    border-radius: 2px 2px 0 0;
+    border-style: solid;
+    border-width: 1px;
+    padding-left: 5px;
+}
+trix-toolbar .button_group {
+    border-color: #d6d6d6;
+    border-radius: 2px;
+    box-shadow: none;
+    margin-bottom: 0;
+    margin-right: 2px;
+    margin-top: 5px;
+    margin-bottom: -2px;
+}
+trix-editor {
+    border-color: #d6d6d6;
+    border-radius: 0 0 3px 3px;
+    word-wrap: break-word;
+    color: #333;
+}
+trix-toolbar .button_group button {
+    border-bottom: 0 none;
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity 0.2s ease 0s;
+}
+trix-toolbar .button_group button.active,
+trix-toolbar .button_group button.active:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    box-shadow: 0 0 4px -1px rgba(0, 0, 0, 0.2) inset !important;
+    opacity: 1;
+}
+trix-toolbar .button_group button:hover {
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1) inset !important;
+    opacity: 1;
+}

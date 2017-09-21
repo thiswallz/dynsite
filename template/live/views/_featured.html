@@ -1,0 +1,33 @@
+<div class="featuredContent hidden-xs">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a data-target="#videosTab" aria-controls="bc_custom_general" role="tab" data-toggle="tab">VIDEOS</a></li>
+        <li role="presentation" ng-if="aboutEventVisible"><a data-target="#aboutTab" aria-controls="bc_custom_links" role="tab" data-toggle="tab">ABOUT</a></li>
+        <li role="presentation" ng-if="mapsVisible"><a data-target="#mapsTab" aria-controls="bc_custom_links" role="tab" data-toggle="tab" ng-click="initMap('mapEvent')">LOCATION</a></li>
+    </ul>
+
+    <div class="tab-content inner">
+        <div role="tabpanel" class="tab-pane active" id="videosTab">
+            <div class="row">
+                <div class="col-md-12 title">FEATURED VIDEOS</div>
+            </div>
+            <div class='fakeThumb col-xs-12 col-sm-4 col-lg-3 thumbnailVideo small'>
+                <a href='#/' class='linkVideo ng-scope'></a>
+                <h3>{{siteData.titulo==''?'Evento':siteData.titulo}}</h3>
+            </div>
+            <bcr-videos-collection id-block="panel_medium" brc-collections="siteData.collections" brc-panel="siteData.site_setting" brc-items="3" brc-class="col-xs-12 col-sm-4 col-lg-3 thumbnailVideo small" brc-size="m" brc-pagination=false hide-likes="true" brc-show-title=false on-finish-loading="onCollectionLoaded()"
+                favs="favsInCollections"></bcr-videos-collection>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="aboutTab" ng-if="aboutEventVisible">
+            <h4 class="title">Acerca del evento</h4>
+            <p class="about">{{aboutEvent}}</p>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="mapsTab" ng-if="mapsVisible">
+            <h4 class="title">{{mapsAddress}}</h4>
+            <p class="about">
+                <ng-map center="[{{mapsGeocode.lat}}, {{mapsGeocode.lng}}]" lazy-init="true" id="mapEvent" default-style="true">
+                    <marker position=" {{mapsGeocode.lat}},{{mapsGeocode.lng}} " title="Evento" animation="Animation.DROP "></marker>
+                </ng-map>
+            </p>
+        </div>
+    </div>
+</div>

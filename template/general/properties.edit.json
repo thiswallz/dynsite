@@ -1,0 +1,89 @@
+{
+    "custom_collection" : false,
+    "max_visible_optionsmenu": 5,
+    "edit_sections"     : [{
+        "cmp"       : "id",
+        "val"       : "bc_headerWrapper",
+        "options"   : ["bgurl", "bgcolor"],
+        "msg"       : "mínima de 1920x330 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_clientLogo",
+        "options"   : ["bgurl", "logoLayout"],
+        "msg"       : "máxima de 500 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "otroid",
+        "options"   : ["color", "extras"],
+        "extras"    : [
+            {
+                "description"   : "Espaciado Izq",
+                "klass"         : "font-size",
+                "tvalue"        : "text",
+                "extension"     : "px",
+                "msg"           : "pixeles"
+            }
+
+        ]
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_clientTitle",
+        "options"   : ["color", "extras"],
+        "extras"    : [
+            {
+                "description"   : "Espaciado Superior",
+                "klass"         : "padding-top",
+                "tvalue"        : "number",
+                "extension"     : "px",
+                "msg"           : "pixeles"
+            },
+            {
+                "description"   : "Fuente",
+                "klass"         : "font-family",
+                "tvalue"        : "combo",
+                "extension"     : "",
+                "msg"           : "",
+                "options"       : [
+                    {
+                        "name"  : "Fantasy",
+                        "value" : "fantasy"
+                    },
+                    {
+                        "name"  : "Monospace",
+                        "value" : "monospace"
+                    },
+                    {
+                        "name"  : "Heredar",
+                        "value" : "inherit"
+                    }
+                ]
+            }
+        ],
+        "manager"   : "bc_tab_setting,bc_custom_general",
+        "msg"       : ""
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainWraper",
+        "options"   : ["bgurl", "bgcolor"],
+        "msg"       : "máxima de 800 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainFooter",
+        "options"   : ["bgurl", "bgcolor", "color"],
+        "msg"       : "mínima de 1920x330 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainFooter_plus",
+        "manager"   : "bc_tab_setting,bc_custom_links",
+        "handlercss": "margin-top: 0px"
+    },{
+        "cmp"       : "class",
+        "val"       : "menuOption2",
+        "options"   : ["bgcolor", "color"]
+    }
+
+
+    
+    ]
+}
+

@@ -1,0 +1,440 @@
+<div>
+    
+<a class="handler" title="Mostrar personalizador de página"><img src="assets/img/customize_icon_show.svg"></a>
+<div ng-if="alert.show" class="alert alert-{{alert.type}} mainAlert" role="alert">
+    <b ng-if="'danger'==alert.type">Error:
+    </b>
+    <b ng-if="'danger'!=alert.type">Atención:
+    </b>{{alert.message}}</div>
+
+<div class="fakeHeader">Personalizador de contenidos/estilos</div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist" id="mainTabList">
+    <li role="presentation" class="active">
+        <a data-target="#bc_tab_content" aria-controls="bc_tab_content" role="tab" data-toggle="tab">Contenido</a>
+    </li>
+    <li role="presentation">
+        <a data-target="#bc_tab_setting" aria-controls="bc_tab_setting" role="tab" data-toggle="tab">Información</a>
+    </li>
+</ul>
+
+<div class="tab-content main">
+
+    <div role="tabpanel" class="tab-pane active" id="bc_tab_content">
+
+        <div class="fakeHeader inner"></div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="innerTabList">
+            <li role="presentation" class="active">
+                <a data-target="#bc_custom_paneles" aria-controls="bc_custom_paneles" role="tab" data-toggle="tab">Paneles</a>
+            </li>
+            <li role="presentation" class="direct">
+                <a data-target="#bc_custom_colecciones" aria-controls="bc_custom_colecciones" role="tab" data-toggle="tab">Colecciones</a>
+            </li>
+            <li role="presentation" class="direct">
+                <a data-target="#bc_custom_menu" aria-controls="bc_custom_menu" role="tab" data-toggle="tab">Menú</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content inner">
+
+            <!-- colecciones -->
+            <div role="tabpanel" class="tab-pane direct" id="bc_custom_colecciones">
+                <div class="alert alert-warning" role="alert">Las Colecciones nos permite agrupar los videos que queremos mostrar tanto en los Paneles como en los Menú</div>
+                <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>&nbsp;</th>
+                        <th>
+                            <a ng-click="createCollection()" class="action"><img src="assets/img/plus.svg" class="svg"></a>
+                        </th>
+                    </tr>
+                    <tr ng-class="{'highlighted': $index==selectedIndex}" ng-repeat="coleccion in siteData.collections">
+                        <td>
+                            <span class="index">{{$index + 1}}</span>
+                        </td>
+                        <td>{{coleccion.name}}</td>
+                        <td>
+                            <a ng-click="editCollection(coleccion.id_coleccion, $index)"><img class="svg" src="assets/img/icon_edit.svg"></a>
+                        </td>
+                        <td>
+                            <ctx-confirm msg="{{confirmMsgDelete}}" confirm-action="deleteCollection($index)">
+                                <a><img class="svg" src="assets/img/trash.svg"></a>
+                            </ctx-confirm>
+                        </td>
+                    </tr>
+                </table>
+
+                <div ng-if="popup_active" class="popup-customizer">
+                    <label>Nombre</label>
+                    <input type="text" ng-model="selectCollectionToEdit.name" class="form-control" placeholder="Ingrese un nombre" aria-describedby="nombre" size="20" maxlength="20">
+                    <label>Fuente de video</label>
+                    <select multiple chosen ng-model="selectCollectionToEdit.source" ng-options="option.name group by option.type disable when option.disabled for option in videoSources track by option.id" data-placeholder="Selecciona una fuente de video..." ng-change="disableSource(videoSources, selectCollectionToEdit.source)">
+                        <option></option>
+                    </select>
+                    <fieldset>
+                        <legend>Filtros</legend>
+                        <table class="table">
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Regla</th>
+                                <th>Parametro</th>
+                                <th>&nbsp;</th>
+                                <th>
+                                    <a ng-click="addFilter(selectCollectionToEdit.filters)" class="action"><img src="assets/img/plus.svg" class="svg"></a>
+                                </th>
+                            </tr>
+                            <tr ng-repeat="filter in selectCollectionToEdit.filters">
+                                <td>
+                                    <select chosen class="mini" inherit-select-classes=true disable-search="true" ng-init="filterType = cloneObject(typeElement);" ng-model="filter.type" ng-options="option.name for option in filterType track by option.value" data-placeholder="Seleccione tipo..."
+                                        ng-change="enabledRule(filter, filterRule)">
+                                        <option></option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select chosen class="mini" inherit-select-classes=true disable-search="true" ng-init="filterRule = cloneObject(ruleElement);enabledRule(filter, filterRule)" ng-model="filter.rule" ng-options="option.name disable when option.disabled for option in filterRule track by option.value"
+                                        data-placeholder="Seleccione regla...">
+                                        <option></option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" ng-hide="filter.rule.value == 'relacion'" ng-model="filter.param" class="form-control" placeholder="parametro para filtrar" maxlength="20" aria-describedby="parametros">
+                                </td>
+                                <td class="chevrons text-center">
+                                    <a ng-click="moveRowUp(filter,$index,'filter')"><img class="svg" src="assets/img/chevron_up.svg"></a>
+                                    <a ng-click="moveRowDown(filter,$index,'filter')"><img class="svg" src="assets/img/chevron_down.svg"></a>
+                                </td>
+                                <td>
+                                    <ctx-confirm msg="{{confirmMsgDelete}}" confirm-action="deleteFilter(selectCollectionToEdit.filters, $index)">
+                                        <a><img class="svg" src="assets/img/trash.svg"></a>
+                                    </ctx-confirm>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Orden</legend>
+
+                        <table class="table">
+                            <tr>
+                                <th>Ordenar por</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select chosen class="large" inherit-select-classes=true disable-search="true" ng-model="selectCollectionToEdit.order.field" ng-options="option.name for option in fieldElement track by option.value" data-placeholder="Seleccione una opción...">
+                                        <option></option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select chosen class="large" inherit-select-classes=true disable-search="true" ng-model="selectCollectionToEdit.order.order" ng-options="option.name for option in orderElement track by option.value" data-placeholder="Seleccione una opción...">
+                                        <option></option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <div class="text-right footer">
+                        <button type="button" class="btn btn-primary" ng-click="cancelEditCollection()">← Volver</button>
+                        <button type="button" class="btn btn-primary" ng-click="saveCollection()">Listo</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paneles y secciones -->
+            <div role="tabpanel" class="tab-pane active" id="bc_custom_paneles">
+                <div class="alert alert-warning" role="alert">Los Paneles son secciones dentro de la página que permiten seleccionar que Colecciones queremos mostrar, tanto en nuestra página principal como en subpáginas.</div>
+
+                <table class="table" ng-repeat="pagina in siteData.template_setting">
+                    <tr>
+                        <th colspan="3">{{pagina.name}}</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Panel</th>
+                        <th>Colección</th>
+                        <th>Visible</th>
+                    </tr>
+                    <tr ng-class="{'highlighted': $index==selectedIndex}" ng-repeat="panel in pagina.panels">
+                        <td>
+                            <span class="index">{{$index + 1}}</span>
+                        </td>
+                        <td class="panel-name">
+                            <input type="text" ng-init="panelName = getPanelName(panel)" ng-model="panelName" class="form-control" placeholder="Nombre del panel" maxlength="20" aria-describedby="panel" ng-change="updateSettingInCollection(panel, currentCollection, panelName)">
+                        </td>
+                        <td>
+                            <select chosen class="medium" inherit-select-classes=true ng-init="currentCollection = {id_coleccion: getIdCollection(panel.panel_id)}" ng-model="currentCollection" ng-options="option.name for option in siteData.collections track by option.id_coleccion"
+                                ng-change="updateSettingInCollection(panel, currentCollection, panelName)" data-placeholder="Selecciona una Colección..." no-results-text="'Selecciona una Colección...'">
+                                <option></option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-init="panel.visible = isChecked(panel.panel_id)" ng-checked="panel.visible" ng-model="panel.visible" ng-change="setPanelVisibility(panel)">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Menú -->
+            <div role="tabpanel" class="tab-pane" id="bc_custom_menu">
+                <div class="alert alert-warning" role="alert">Los menús permiten agrupar videos según alguna clasificación, la definición de estas agupaciones es reflejada en el menú principal de la página.</div>
+                <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Título</th>
+                        <th>Colección</th>
+                        <th>&nbsp;</th>
+                        <th>
+                            <a ng-click="addCustomContent('menu')" class="action"><img src="assets/img/plus.svg" class="svg"></a>
+                        </th>
+                    </tr>
+                    <tr ng-class="{'highlighted': $index==selectedIndex}" ng-repeat="category in siteData.menus | orderBy:'priority'">
+                        <td>
+                            <span class="index">{{$index + 1}}</span>
+                        </td>
+                        <td class="panel-name"><input type="text" class="form-control" ng-model="category.nombre"></td>
+                        <td>
+                            <select chosen class="medium" inherit-select-classes=true ng-init="currentCollection = {id_coleccion: category.id_coleccion}" ng-model="currentCollection" ng-options="option.name for option in siteData.collections track by option.id_coleccion" ng-change="updateCurrentCategory(category, currentCollection)"
+                                data-placeholder="Seleccione una Colección ..." no-results-text="'Selecciona una Colección...'">
+                                <option></option>
+                            </select>
+                        </td>
+                        <!-- ng-init="currentCollection = {id: category.id_playlist}"  -->
+                        <td class="chevrons text-center">
+                            <a ng-click="moveRowUp(category,$index,'menu')"><img class="svg" src="assets/img/chevron_up.svg"></a>
+                            <a ng-click="moveRowDown(category,$index,'menu')"><img class="svg" src="assets/img/chevron_down.svg"></a>
+                        </td>
+                        <td>
+                            <ctx-confirm msg="{{confirmMsgDelete}}" confirm-action="deleteCustomContent('menu',category.nombre)">
+                                <a><img class="svg" src="assets/img/trash.svg"></a>
+                            </ctx-confirm>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div class="text-right footer">
+            <button type="button" id="resetBCCustomContent" class="btn btn-default" ng-click="getSiteDataFromService();">Anular cambios</button>
+            <button type="button" class="btn btn-primary" ng-click="setSite()" ng-disabled="!customContentHasChanged">Guardar cambios
+                <img ng-if="savingCustomization" src="assets/img/loading.svg"></button>
+        </div>
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane direct" id="bc_tab_setting">
+
+        <div class="fakeHeader inner"></div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="innerTabList">
+            <li role="presentation" class="active">
+                <a data-target="#bc_custom_general" aria-controls="bc_custom_general" role="tab" data-toggle="tab">Gral</a>
+            </li>
+            <li role="presentation">
+                <a data-target="#bc_custom_links" aria-controls="bc_custom_links" role="tab" data-toggle="tab">Links</a>
+            </li>
+            <li role="presentation">
+                <a data-target="#bc_custom_about" aria-controls="bc_custom_about" role="tab" data-toggle="tab">Acerca de</a>
+            </li>
+            <li role="presentation">
+                <a data-target="#bc_custom_social_links" aria-controls="bc_custom_social_links" role="tab" data-toggle="tab">Social</a>
+            </li>
+
+            <li role="presentation">
+                <a data-target="#bc_custom_fields" aria-controls="bc_custom_fields" role="tab" data-toggle="tab">Custom</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content inner">
+
+            <!-- Nombre -->
+            <div role="tabpanel" class="tab-pane active" id="bc_custom_general">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Tips:</strong> El título corresponde al texto del encabezado superior de la página; si no desea mostrarlo simplemente limpie el valor del siguiente cuadro de texto:
+                </div>
+                <label>Título</label>
+                <input type="text" class="form-control" id="title" ng-model="siteData.titulo" maxlength="20">
+                <label>Código Analytics</label>
+                <input type="text" class="form-control" ng-model="siteData.analytics_id">
+                <label>Alias del sitio</label>
+                <input type="text" class="form-control" ng-model="siteData.alias" readonly>
+            </div>
+
+            <!-- Links -->
+            <div role="tabpanel" class="tab-pane" id="bc_custom_links">
+                <div class="alert alert-warning" role="alert">Corresponde a la lista de enlaces externos vinculados con la página, puede ordenar la prioridad en que aparecen utilizando las flechas de cada fila.</div>
+                <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Descripción</th>
+                        <th>Url</th>
+                        <th></th>
+                        <th>
+                            <a ng-click="addCustomContent('links')" class="action"><img src="assets/img/plus.svg" class="svg"></a>
+                        </th>
+                    </tr>
+                    <tr ng-class="{'highlighted': $index==selectedIndex}" ng-repeat="link in siteData.links | orderBy:'priority'">
+                        <td>
+                            <span class="index">{{$index + 1}}</span>
+                        </td>
+                        <td><input type="text" class="form-control" ng-model="link.descripcion"></td>
+                        <td><input type="url" ng-model="link.link" placeholder="http://www.ejemplo.com" ng-pattern="/(https?:\/\/)(www)?[A-Za-z0-9.\-@_~]+\.[A-Za-z]{2,}(:[0-9]{2,5})?(\/[A-Za-z0-9\/_\-.~?&=]*)*/" required></td>
+                        <td class="chevrons text-center">
+                            <a ng-click="moveRowUp(link,$index,'links')"><img class="svg" src="assets/img/chevron_up.svg"></a>
+                            <a ng-click="moveRowDown(link,$index,'links')"><img class="svg" src="assets/img/chevron_down.svg"></a>
+                        </td>
+                        <td>
+                            <ctx-confirm msg="{{confirmMsgDelete}}" confirm-action="deleteCustomContent('links', link.descripcion)">
+                                <a><img class="svg" src="assets/img/trash.svg"></a>
+                            </ctx-confirm>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Acerca de -->
+            <div role="tabpanel" class="tab-pane" id="bc_custom_about">
+                <div class="alert alert-warning" role="alert">En esta sección puede definir un contenido personalizado que se presentará en el pie de la página. Puede dar formato al texto utilizando el editor que esta sección contiene.</div>
+                <trix-editor spellcheck="false" class="trix-content" ng-model="siteData.acerca_de" angular-trix trix-initialize="trixInitialize(e, editor);" trix-change="trixChange(e, editor);" trix-selection-change="trixSelectionChange(e, editor);" trix-focus="trixFocus(e, editor);"
+                    trix-blur="trixBlur(e, editor);" trix-file-accept="trixFileAccept(e, editor);" trix-attachment-add="trixAttachmentAdd(e, editor);" trix-attachment-remove="trixAttachmentRemove(e, editor);" placeholder="Escriba algo ..."></trix-editor>
+            </div>
+
+            <!-- Links sociales -->
+            <div role="tabpanel" class="tab-pane" id="bc_custom_social_links">
+                <div class="alert alert-warning" role="alert">Corresponde a la lista de enlaces a sus redes sociales. Puede ordenar la prioridad en que aparecen utilizando las flechas de cada fila.</div>
+                <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Red social</th>
+                        <th>Url</th>
+                        <th></th>
+                        <th>
+                            <a ng-click="addCustomContent('redes_sociales')" class="action"><img src="assets/img/plus.svg" class="svg"></a>
+                        </th>
+                    </tr>
+                    <tr ng-class="{'highlighted': $index==selectedIndex}" ng-repeat="link in siteData.redes_sociales">
+                        <td>
+                            <span class="index">{{$index + 1}}</span>
+                        </td>
+                        <td>
+                            <select chosen="" ng-init="currentSocialNetwork = {id: link.id}" ng-model="currentSocialNetwork" ng-options="option.desc for option in socialNetworks track by option.id" ng-change="updateCurrentSocialNetwork(link, currentSocialNetwork)" data-placeholder="Seleccione una opción ...">
+                                <option></option>
+                            </select>
+                        </td>
+
+                        <td><input type="url" ng-model="link.url" placeholder="http://www.ejemplo.com" ng-pattern="/(https?:\/\/)(www)?[A-Za-z0-9.\-@_~]+\.[A-Za-z]{2,}(:[0-9]{2,5})?(\/[A-Za-z0-9\/_\-.~?&=]*)*/" required></td>
+                        <td class="chevrons text-center">
+                            <a ng-click="moveRowUp(link,$index,'redes_sociales')"><img class="svg" src="assets/img/chevron_up.svg"></a>
+                            <a ng-click="moveRowDown(link,$index,'redes_sociales')"><img class="svg" src="assets/img/chevron_down.svg"></a>
+                        </td>
+                        <td>
+                            <ctx-confirm msg="{{confirmMsgDelete}}" confirm-action="deleteCustomContent('redes_sociales',link.id )">
+                                <a><img class="svg" src="assets/img/trash.svg"></a>
+                            </ctx-confirm>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Señal en vivo -->
+            <div role="tabpanel" class="tab-pane" id="bc_custom_live">
+                <div class="alert alert-warning" role="alert">
+                    Permite definir si su página tiene señal en vivo y si estará disponible desde el menú principal.
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-checked="siteData.live==1" ng-model="siteData.live" ng-true-value="1" ng-false-value="0">
+                        Tengo señal en vivo
+                    </label>
+                </div>
+                <select name="id_channel" id="id_channel" chosen="" ng-model="siteData.id_channel" ng-options="item.id_channel as item.nombre for item in lsChannels" data-placeholder="Seleccione una opción ..." ng-if="siteData.live==1">
+                    <option></option>
+                </select>
+                <hr>
+            </div>
+
+            <!-- Campos custom -->
+            <div role="tabpanel" class="tab-pane" id="bc_custom_fields">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Campos personalizados:</strong> Corresponden a campos para usos generales y que podrían ser requeridos para una plantilla en particular:
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Campo</th>
+                        <th>Valor</th>
+                        <th>Visible</th>
+                    </tr>
+                    <tr ng-class="{'highlighted': $index==selectedIndex}" ng-repeat="field in siteData.custom_data">
+                        <td>
+                            <span class="index">{{$index + 1}}</span>
+                        </td>
+                        <td>{{field.name}}</td>
+                        <td>
+                            <input ng-if="!field.prefix" type="text" class="form-control" ng-model="field.value">
+                            <div class="input-group" ng-if="field.prefix">
+                                <div class="input-group-addon">{{field.prefix}}</div>
+                                <input type="text" class="form-control" ng-model="field.value">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-checked="field.visible" ng-model="field.visible">
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Player -->
+            <div role="tabpanel" class="tab-pane" id="bc_custom_player">
+                Skin player<br>
+                <select chosen="" ng-model="currentPlayer" ng-options="option.nombre for option in players track by option.id_player" ng-change="updateCurrentPlayer(currentPlayer)" data-placeholder="Seleccione una opción ...">
+                    <option></option>
+                </select>
+                <hr> Inicar repoducción automáticamente:
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-checked="siteData.autostart.home" ng-model="siteData.autostart.home">
+                        Home (página inicial)
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-checked="siteData.autostart.video" ng-model="siteData.autostart.video">
+                        Pagina de video
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-checked="siteData.autostart.live" ng-model="siteData.autostart.live">
+                        Señal en vivo
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right footer">
+            <button type="button" id="resetBCCustomContent" class="btn btn-default" ng-click="getSiteDataFromService();">Anular cambios</button>
+            <button type="button" class="btn btn-primary" ng-click="setSite()" ng-disabled="!customContentHasChanged">Guardar cambios
+                <img ng-if="savingCustomization" src="assets/img/loading.svg"></button>
+        </div>
+    </div>
+</div>
+
+<!--Warapper for file imputs-->
+<div id="bcTmpFileContainer"></div>
+
+</div>

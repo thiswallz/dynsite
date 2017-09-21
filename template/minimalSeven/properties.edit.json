@@ -1,0 +1,58 @@
+{
+    "custom_collection" : true,
+    "edit_sections"     : [{
+        "cmp"       : "id",
+        "val"       : "bc_headerWrapper",
+        "options"   : ["bgurl", "bgcolor"],
+        "msg"       : "mínima de 1920x330 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_clientLogo",
+        "options"   : ["bgurl", "logoLayout"],
+        "msg"       : "máxima de 500 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_clientTitle",
+        "options"   : ["color"],
+        "manager"   : "bc_tab_setting,bc_custom_general",
+        "msg"       : ""
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainWraper",
+        "options"   : ["bgurl", "bgcolor"],
+        "msg"       : "máxima de 800 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainFooter",
+        "options"   : ["bgurl", "bgcolor", "color"],
+        "msg"       : "mínima de 1920x330 pixeles"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainFooter",
+        "manager"   : "bc_tab_setting,bc_custom_links",
+        "handlercss": "margin-top: 0px"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_sectionDivider1",
+        "options"   : ["bgcolor"],
+        "handlercss": "margin-top: -33px;"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_sectionDivider2",
+        "options"   : ["bgcolor"],
+        "handlercss": "margin-top: -33px;"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_footerDivider",
+        "options"   : ["bgcolor"],
+        "handlercss": "margin-top: -18px; margin-left: 73px;"
+    },{
+        "cmp"       : "id",
+        "val"       : "bc_mainMenu",
+        "options"   : ["bgcolor", "color"],
+        "handlercss": "margin-top: -18px; margin-left: 73px;"
+    }
+
+    ]
+}
+

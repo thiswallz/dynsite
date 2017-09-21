@@ -1,0 +1,881 @@
+
+
+177 - finished => {
+    general/home => {55}
+}
+
+198 - loginCustomRecoverForm => {
+    general/logincustom => {40},
+    live/logincustom => {40},
+    live/minimalSeven => {40}
+}
+
+
+204 - loginCustomRecoverPassword => {
+    general/logincustom.html => {64}   
+    live/logincustom.html  => {64}
+    minimalSeven/logincustom.html  => {64}
+}
+
+227 - signOut => {
+    general/partials/_menu.html
+    live/home.html =>{7}
+    minimalSeven/partials/_menu.html =>{7}
+}
+
+234 - loginCustomAccess => {
+    general/logincustom.html => {49, 73}
+    live/logincustom.html => {49, 73}
+    minimalSeven/logincustom.html => {49, 73}
+    
+}
+
+240 - loginCustom => {
+    general/logincustom.html => {39}
+    live/logincustom.html => {39}
+    minimalSeven/logincustom.html => {39}
+}
+
+263 - loginCustomValidate => {
+    general/logincustom.html => {18}
+    live/logincustom.html => {18
+    minimalSeven/logincustom.html => {18}
+}
+
+291 - login => {
+    general/login.html => {3, 16}
+    live/login.html => {3, 16}
+    minimalSeven/login.html => {3, 16}
+}
+
+310 - paymentLogin => {
+    general/payment.html => {23}
+    live/payment.html => {23}
+    minimalSeven/payment.html => {23}
+}
+
+332 - payment => {
+    general/payment.html => {59}
+    live/payment.html => {59}
+    minimalSeven/payment.html => {59}
+}
+
+366 - paymentTrans => {
+    --NOTHING--
+}
+
+374 - onCollectionLoaded => {
+    general/login.html => {32, 37, 40}
+    live/_featured.html => {17}
+    minimalSeven/login.html => {41, 47, 57}
+}
+
+382 - setPaymentCurrentScreen => {
+    general/payment.html => {24, 58, 92}
+    live/payment.html => {24, 58, 92}
+    minimalSeven/payment.html => {24, 58, 92}
+}
+
+446 - getUrl => {
+    --MAYORÍA DE LOS ARCHIVOS--
+}
+
+451 - getStyles => {
+    --NOTHING--
+}
+
+489 - getLiveVideo => {
+    --NOTHING--
+}
+
+514 - searchMedia => {
+    --NOTHING--
+}
+
+529 - selectVideo => {
+    --NOTHING--
+}
+
+778 - saveTrackingVideo => {
+    --NOTHING--
+}
+
+907 - getChannelData => {
+    --NOTHING--
+}
+
+939 - getSiteData => {
+    shared/_content_customizer.html {224, 428}
+}
+
+1034 - getSiteDataFromService =>{
+    shared/_content_customizer.html {224, 428}
+}
+
+1138 - getGeneralParams => {
+    --NOTHING--
+}
+
+1156 - likeVideo => {
+    general/video.html {43}
+    minimalSeven/video.html {47}
+}
+
+1187 - setLikeOnServer => {
+    --NOTHING--
+}
+
+1206 - isLikedVideo => {
+    general/categories.html {44}
+    general/partials/_medium_thumbnails.html {5}
+    general/partials/_small_thumbnails.html {5}
+    general/video.html {43}
+    minimalSeven/categories.html {44}
+    minimalSeven/partials/_medium_thumbnails.html {5}
+    minimalSeven/partials/_small_thumbnails.html {5}
+    minimalSeven/video.html {47}
+}
+
+1222 - getPlayLists => {
+    --NOTHING--
+}
+
+1240 - getPlayers => {
+    --NOTHING--
+}
+
+1262 - getChannel => {
+    --NOTHING--
+}
+
+1392 - refreshCollection => {
+    --NOTHING--
+}
+
+1398 - setSite => {
+    shared/_content_customizer.html {225, 429}
+}
+
+1517 - addCustomContent => {
+    shared/_content_customizer.html {193, 280, 319}
+}
+
+1553 - deleteCustomContent => {
+    shared/_content_customizer {213, 294, 338}
+}
+
+1584 - disableSource => {
+    shared/_content_customizer.html {73}
+}
+
+1621 - enabledRule  => {
+    shared/_content_customizer {91, 96}
+}
+
+1638 - cloneObject => {
+    shared/_content_customizer {90, 96}
+}
+
+1644 - deleteCollection => {
+    shared/_content_customizer.html {62}
+}
+
+1649 - cancelEditCollection => {
+    shared/_content_customizer.html {139}
+}
+
+1655 - editCollection => {
+    shared/_content_customizer.html {59, 139}
+}
+
+1665 - createCollection => {
+    shared/_content_customizer.html {50}
+}
+
+1675 - saveCollection => {
+     shared/_content_customizer.html {140}
+}
+
+1715 - updateCurrentCollection => {
+    --NOTHING--
+}
+
+1723 - getIdCollection => {
+    shared/_content_customizer.html {167}
+}
+
+1731 - getPanelName => {
+    shared/_content_customizer.html {164}
+}
+
+1752 - updateSettingInCollection => {
+    shared/_content_customizer.html {164, 168}
+}
+
+1788 - isChecked => {
+    shared/_content_customizer.html {175}
+}
+
+1803 - updateOrderCollection => {
+    --NOTHING--
+}
+
+1829 - deleteFilter => {
+    shared/_content_customizer.html {109}
+}
+
+1834 - enableAddFilterButton => {
+    --NOTHING--
+}
+
+1843 - setPanelVisibility => {
+    shared/_content_customizer.html {175}
+}
+
+1868 - updateCurrentCategory => {
+    shared/_content_customizer.html {202}
+}
+
+1894 - updateCurrentSocialNetwork => {
+    shared/_content_customizer.html {327}
+}
+
+1898 - updateCurrentPlayer => {
+    shared/_content_customizer.html {401}
+}
+
+1931 - moveRowUp => {
+    shared/_content_customizer.html {105, 209, 290, 334}
+}
+
+1962 - moveRowDown => {
+    shared/_content_customizer.html {106, 210, 291, 335}
+}
+
+2016 - reveal360 => {
+    --NOTHING--
+}
+
+2022 - trustAsHtml => {
+    general/partials/_footer.html {12}
+    live/partials/_footer.html {12}
+    minimalSeven/partials/_footer.html {12}
+}
+
+2083 - trixAttachmentAdd => {
+    shared/_content_customizer.html {306}
+}
+
+
+
+///////////////VARS SCOPE
+
+66 - siteData => {
+    --MAYORÍA--
+}
+
+67 - selectCollectionToEdit => {
+    /shared/_content_customizer.html
+}
+
+68 - videoSources => {
+    /shared/_content_customizer.html
+}
+
+69 - template => {
+    general/video.html
+    minimalSeven/liveController.js
+    minimalSeven/video.html
+    shared/_content_customizer.html
+}
+
+70 - tracker => {
+    --NOTHING--
+}
+
+71  - loadedCollections => {
+    --NOTHING--
+}
+
+72 - favsInCollections => {
+    general/home.html
+    live/_featured.html
+    minimalSeven/home.html
+}
+
+73 -  startEvent => {
+    live/home.html
+}
+
+74 - startEvent => {
+    general/home.html
+    minimalSeven/home.html
+}
+
+75 - reveal360view => {
+    --NOTHING--
+}
+
+76  - validateMail => {
+    general/logincustom.html
+    general/payment.html
+    live/logincustom.html
+    live/payment.html
+    minimalSeven/logincustom.html
+    minimalSeven/payment.html
+}
+
+77 - letterNumber => {
+    --NOTHING--
+}
+
+78 - validatePwd => {
+    --NOTHING
+}
+
+79 - validatePwd2 => {
+    --NOTHING--
+}
+
+80 - defaultPaymentMethod => {
+    general/payment.html
+    live/payment.html
+    minimalSeven/payment.html
+}
+
+81 - paymentCurrentScreen => {
+    general/payment.html
+    general/_pay_voucher_html
+    live/payment.html
+    live/payment/_pay_voucher_html
+    minimalSeven/payment.html
+    minimalSeven/_pay_voucher_html
+}
+
+83 - customizable => {
+    --MAYORÍA--
+}
+
+85 - defaultOrderCollection => {
+    --NOTHING--
+}
+
+96 - emptyCollection => {
+    --NOTHING--
+}
+
+106 - filterObject => {
+    --NOTHING--
+}
+
+111 - orderObject => {
+    --NOTHING--
+}
+
+116 - typeElement => {
+    shared/_content_customizer.html
+}
+
+127 - ruleElement => {
+    shared/_content_customizer.html
+}
+
+144 - fieldElement => {
+    shared/_content_customizer.html
+}
+
+161 - orderElement => {
+    shared/_content_customizer.html
+}
+
+177 - finished => {
+    shared/_content_customizer.html
+}
+
+191 - loginDataCustom => {
+    general/logincustom.html
+    live/logincustom.html
+    minimalSeven/logincustom.html
+}
+
+192 - loginValidateCustom => {
+    general/logincustom.html
+    live/logincustom.html
+    minimalSeven/logincustom.html
+}
+
+193 - isCustomValidate => {
+    general/logincustom.html
+    live/logincustom.html
+    minimalSeven/logincustom.html
+}
+
+194 - isCustomRecoverPassword => {
+    general/logincustom.html
+    live/logincustom.html
+    minimalSeven/logincustom.html
+}
+
+195 - loginRecoverPassword => {
+    general/logincustom.html
+    live/logincustom.html
+    minimalSeven/logincustom.html
+}
+
+196 - isCustomRecoverSendMail => {
+    general/logincustom.html
+    live/logincustom.html
+    minimalSeven/logincustom.html
+}
+
+
+309 - isPayment => {
+    general/payment.html
+    general/payment/_pay_voucher_html
+    live/payment.html
+    live/payment/_pay_voucher_html
+    minimalSeven/payment.html
+    minimalSeven/payment/_pay_voucher_html
+}
+
+
+
+387 - sourceVideoCollection => {
+    --NOTHING--
+}
+
+398 - workingData => {
+    general/partials/_pagination.html
+    minimalSeven/partials/_pagination.html
+}
+
+402 - viewingLive => {
+    general/partials/_menu.html
+    minimalSeven/partials/_menu.html
+}
+
+405 - s3UrlPrefix => {
+    general/categories.html
+    general/partials/_medium_thumbnails.html
+    general/partials/_small_thumbnails.html
+    minimalSeven/categories.html
+    minimalSeven/partials/_medium_thumbnails.html
+    minimalSeven/partials/_small_thumbnails
+}
+
+406 - assetspath => {
+    --NOTHING--
+}
+
+407 - s3urlprefiximages => {
+    --NOTHING--
+}
+
+417 - videoAlias => {
+    --NOTHING
+}
+
+418 - idSelectedCollection => {
+    general/collections.html
+    general/partials/_menu.html
+    general/search.html
+    general/tags.html
+    minimalSeven/collections.html
+    minimalSeven/partials/_menu.html
+    minimalSeven/search.html
+    minimalSeven/tags.html
+}
+
+419 - selectedTag => {
+    general/tags.html
+    minimalSeven/tags.html
+}
+
+420 - keywordsSearch => {
+    general/search.html
+    minimalSeven/search.html
+}
+
+423 - urlSite => {
+    general/video.html
+    live/home.html
+    live/video.html
+    minimalSeven/video.html
+}
+
+424 - root_path => {
+    --MAYORÍA--
+}
+
+425 - urlSiteShare => {
+    --NOTHING--
+}
+
+428 - maxVisibleOptionsmenu => {
+    general/partials/_menu.html
+    minimalSeven/partials/_menu.html
+}
+
+434 - pagination.page => {
+    general/partials/_pagination.html
+    minimalSeven/partials/_pagination.html
+}
+
+436 - customContentHasChanged => {
+    shared/_content_customizer.html
+}
+
+440 - playerOptions => {
+    general/home.html
+    minimalSeven/home.html
+}
+
+442 - alert => {
+    shared/_content_customizer.html
+}
+
+906 - channelActivo => {
+    general/live.html
+    live/home.html
+    minimalSeven/live.html
+}
+
+907 - getChannelData => {
+    
+}
+
+1552 - confirmMsgDelete => {
+    shared/_content_customizer.html
+}
+
+---ConfigSite---
+
+ENVIRONMENT => {
+    app/api-config
+}
+
+APIHOST => {
+    app/api-config.js
+}
+
+
+private => {
+    app/gallery.js
+}
+
+custom_access => {
+    app/controllers/homeInitCtrl.js
+    app/gallery.js
+}
+
+ACTIVO => {
+    app/gallery.js
+}
+
+payment => {
+    app/gallery.js
+}
+
+codigo_analytics => {
+    app/gallery.js
+}
+
+bucketS3 => {
+    --NOTHING--
+}
+
+bucketS3assets => {
+    --NOTHING--
+}
+
+root_path' => {
+    app/components/collection/collection.directive.js
+    app/controllers/homeInitCtrl.js
+}
+
+id_sitio => {
+    app/api-config.js
+    app/components/collection/collection.directive.js
+    app/controllers/homeInitCtrl.js
+}
+
+
+id_usuario => {
+    app/components/collection/collection.directive.js
+    app/controllers/homeInitCtrl.js
+}
+
+bcCustomize => {
+    app/controllers/homeInitCtrl.js
+    app/gallery.js
+}
+
+s3UrlPrefix => {
+    app/components/collection/collection.directive.js
+    app/controllers/homeInitCtrl.js
+}
+
+s3urlprefiximages => {
+    app/components/collection/collection.directive.js
+    app/controllers/homeInitCtrl.js
+}
+
+assetspath => {
+    app/controllers/homeInitCtrl.js
+}
+
+ambientPrefix => {
+    app/components/collection/collection.directive.js
+    app/controllers/homeInitCtrl.js
+}
+
+apache_unique_id => {
+    app/controllers/homeInitCtrl.js
+    app/tracked.js
+}
+
+template => {
+    app/components/collection/collection.directive.js
+    controllers/homeInitCtrl.js
+    app/gallery.js
+}
+
+ip_request => {
+    controllers/homeInitCtrl.js
+}
+
+firehoseName => {
+    controllers/homeInitCtrl.js
+}
+
+
+
+---LIBS---
+
+vr.js => {
+    libs/vendor/jwplayer-7.11.0/jwplayer.js
+}
+
+update-meta.min.js => {
+    gulpfile.js
+}
+
+ui-bootstrap-tpls-1.3.3.min.js => {
+    gulpfile.js
+}
+
+trix.js {
+    gulpfile.js
+    libs/vendor/customizerLibs.js
+}
+
+ngJwplayer.min.js => {
+    index.html
+}
+
+modernizer_custom.js => {
+    gulpfile.js
+    libs/vendor/customizerLibs.js
+}
+
+jwplayer.min.js => {
+    --NOTHING--
+}
+
+jquery-1.11.2.min.js => {
+    gulpfile.js
+}
+
+fastclick.min.js => {
+    gulpfile.js
+}
+
+dom-drag.js => {
+    gulpfile.js
+    libs/vendor/dom-drag.js
+}
+
+customizerLibs.js => {
+    gulpfile.js
+}
+
+chosen.js => {
+    gulpfile.js
+    libs/vendor/customizerLibs.js
+}
+
+chosen.jquery.min.js => {
+    gulpfile.js
+    libs/vendor/customizerLibs.js
+}
+
+bootstrap.min.js => {
+    gulpfile.js
+}
+
+bcCustomize.min.js => {
+    gulpfile.js
+    libs/vendor/customizerLibs.js
+}
+
+aws-sdk-2.82.0.min.js => {
+    index.html
+}
+
+angular.min.js => {
+    gulpfile.js
+    libs/vendor/angular.min.js
+    libs/vendor/timer/js/angular-time-bowser.js
+}
+
+angular-uuid.js => {
+    gulpfile.js
+}
+
+angular-trix.js => {
+    gulpfile.js
+    libs/vendor/customizerLibs.js
+}
+
+angular-socialshare.min.js => {
+    gulpfile.js
+}
+
+angular-socialshare.js => {
+    libs/vendor/angular-socialshare.min.js
+}
+
+angular-sanitize.min.js => {
+    gulpfile.js
+    libs/vendor/angular-sanitize.min.js
+}
+
+angular-sanitize.js => {
+    libs/vendor/angular-sanitize.min.js
+}
+
+angular-route.min.js => {
+    gulpfile.js
+    libs/vendor/angular-route.min.js
+}
+
+angular-route.js => {
+    libs/vendor/angular-route.min.js
+}
+
+angular-cookies.min.js => {
+    gulpfile.js
+    libs/vendor/angular-cookies.min.js
+}
+
+angular-cookies.js => {
+    --NOTHING--
+}
+
+angular-timer.js => {
+    --NOTHING--
+}
+
+angular-timer-bower.js => {
+    --NOTHING--
+}
+
+angular-timer-all.min.js => {
+    index.html
+}
+
+ng-map.min.js => {
+    index.html
+}
+
+ng-map.js => {
+    --NOTHING--
+}
+
+bitdashplayer.min.js => {
+    --NOTHING--
+}
+
+bitdashplayer.min.css => {
+    --NOTHING--
+}
+
+bitdash.min.js => {
+    --NOTHING--
+}
+
+bitdash-vr.min.js => {
+    --NOTHING--
+}
+
+bitdash-controls.min.js => {
+    --NOTHING--
+} 
+
+bitdash-controls.min.css => {
+    --NOTHING--
+}
+
+
+---LIBRERÍA DE EDICIÓN---
+chosen => {
+    app/shared/_content_customizer.html
+}
+
+
+--Assets - css--
+
+trix.css => {
+    gulpfile.js
+}
+
+trix_custom.css => {
+    gulpfile.js
+}
+
+style.scss => {
+    assets/css/style.css.map
+}
+
+style.css.map => {
+    --NOTHING--
+}
+
+style.css => {
+    --EN SU MAYORÍA--
+}
+
+fontImports.css => {
+    gulpfile.js
+}
+
+chosen.min.css => {
+    gulpfile.js
+}
+
+bootstrap.min.css => {
+    gulpfile.js
+}
+
+bcCustomize.scss => {
+    assets/css/bcCustomize.css.map
+}
+
+bcCustomize.min.css => {
+    --NOTHING--
+}
+
+bcCustomize.css.map => {
+    --NOTHING--
+}
+
+bcCustomize.css => {
+    assets/css/bcCustomize.css.map
+    gulpfile.js
+}
+
+all.css => {
+    .gitignore
+    gulpfile.js
+    index.html
+}

@@ -1,0 +1,96 @@
+<div ng-show="visible">
+    <div class="loading" ng-class="{'hideIt': !loadingContent}">' +
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+    <div ng-if="brcSize != 'xl'">
+        <div class="row headerSection" ng-if="brcShowTitle">
+            <div class="col-lg-10 title">{{panelName}}</div>
+            <div class="col-lg-2 text-right" style="position:relative;">
+                <div id="SearchMedia" ng-if="brcSize == 'l'">
+                    <input type="search" novalidate="true" placeholder="Buscar" ng-model="searchKeywords" ng-keyup="$event.keyCode == 13 && searchMedia()">
+                </div>
+            </div>
+        </div>
+        <div class="row section">
+            <!--id="idvcarc_{{idBlock}}{{video.video_id_video}}" data-bccustom-attrs="bgcolor bgurl color" data-bccustom-max-size-info="Prueba mauricio" -->
+            <div class="{{brcClass}}" ng-repeat="video in videosCollectionList track by video.video_id_video">
+                <a ng-if="brcSize == 's'" href="{{rootPath}}video/{{video.alias}}" class="linkVideo" style="background-image:url( {{getPathImg(video,s)}});"></a>
+                <a ng-if="brcSize == 'm'" href="{{rootPath}}video/{{video.alias}}" class="linkVideo" style="background-image:url( {{getPathImg(video,m)}});"></a>
+                <a ng-if="brcSize == 'l'" href="{{rootPath}}video/{{video.alias}}" class="linkVideo" style="background-image:url( {{getPathImg(video,l)}});"></a>
+                <a ng-if="brcSize == 'xl'" href="{{rootPath}}video/{{video.alias}}" class="linkVideo" style="background-image:url( {{getPathImg(video,xl)}});"></a>
+                <div class="social">
+                    <span class="views svgFallback">{{::video.views}}</span>
+                    <span ng-if="!hideLikes" class="likes svgFallback" >{{::video.likes}}</span>
+                    <span class="date svgFallback">{{::video.fecha_creacion | date:'dd/MM/yyyy'}}</span>
+                </div>
+                <h3   >{{::video.nombre}}</h3>
+                <p ng-if="brcSize!='m'" class="videoDesc" ng-class="{'paragraph_3_lines':video.tags=='' && brcSize=='l', 'paragraph_2_lines':video.tags!='' && brcSize=='l'}">{{::video.descripcion}}</p>
+                <p ng-if="video.tags!=''" class="tags"><a ng-if="accumulatingLengthOfTags((video.tags).split(','), $index, brcSize)" ng-repeat="tag in (video.tags).split(',') track by $index"
+                        href="{{::rootPath}}tags/{{::tag}}">{{::tag}}</a></p>
+            </div>
+        </div>
+        <uib-pagination ng-if="brcPagination" items-per-page="brcItems" total-items="totalVideoCollection" ng-model="currentPage"
+            max-size="5" ng-change="getCollectionByPage(currentPage)" boundary-link-numbers="true" previous-text="&lsaquo;" next-text="&rsaquo;"
+            first-text="&laquo;" last-text="&raquo;" template-url="template/general/partials/_cpagination.html"></uib-pagination>
+    </div>
+    <div ng-if="brcSize == 'xl'">
+        <div ng-if="videosCollectionList.length!=0">
+            <div class="row section eqHeight mtNegative">
+                <div ng-class="{'col-xs-12':!brcClassInfo}" class="{{brcClassInfo}} info-video big home">
+                    
+                    <div class="social">
+                        <span class="views svgFallback">{{::xlvideo.views}}</span>
+                        <span ng-if="!hideLikes" class="likes svgFallback">{{::xlvideo.likes}}</span>
+                        <a ng-click="likeVideoCollection(xlvideo.video_id_video)" class="like svgFallback" ng-class="{'selected': isLiked(xlvideo.video_id_video)}"></a>
+                        <span class="date svgFallback">{{::xlvideo.fecha_creacion | date:'dd/MM/yyyy'}}</span>
+                    </div>
+                    <h3>{{::xlvideo.nombre}}</h3>
+                    
+                    <p ng-class="{'paragraph_4_lines':xlvideo.tags=='', 'paragraph_3_lines':xlvideo.tags!=''}">{{::xlvideo.descripcion}}</p>
+                    <p ng-if="xlvideo.tags!=''" class="tags"><a ng-if="accumulatingLengthOfTags((xlvideo.tags).split(','), $index, brcSize)" ng-repeat="tag in (xlvideo.tags).split(',') track by $index"
+                            href="{{::rootPath}}/#/tags/{{::tag}}">{{::tag}}</a></p>
+                    <div class="share">
+                        <a href="" class="svgFallback twitter" socialshare socialshare-provider="twitter" socialshare-text="{{::xlvideo.nombre}}" socialshare-url="{{::urlSite}}"></a>
+                        <a href="" class="svgFallback facebook" socialshare socialshare-provider="facebook" socialshare-via="306076579750092" socialshare-url="{{::urlSite}}"
+                            socialshare-text="{{::xlvideo.nombre}}" socialshare-description="{{::xlvideo.descripcion}}" socialshare-media="{{getPathImg(xlvideo,xl,url_scheme)}}"
+                            socialshare-type="feed" socialshare-source="{{::urlSite}}" socialshare-caption="{{::urlSite}}"> 
+                        </a>
+                        <a href="mailto:?Subject={{::xlvideo.nombre}}&body={{::urlSite | escapeHTML}}" class="mail"></a>
+                    </div>
+                </div>
+                <div ng-class="{'col-xs-10 col-xs-offset-1':!brcClass}" class="{{brcClass}} thumbnailVideo big" >
+                    <jwplayer ng-if="!player360" ng-init="isPlayerLoaded()" ng-src="{{fileToPlayHome}}" player-options="optionsPlayerHome"
+                        player-id="playerHome"></jwplayer>
+                    <div ng-if="player360" class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" ng-src="{{iframeFixSrc}}"></iframe>
+                    </div>
+                    <input type="hidden" id="playerName" value="playerSelected"><input type="hidden" id="videoId" value="{{xlvideo.video_id_video}}"></div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <!---
+Variables disponibles:
+    Array<Object>   - Listado de Videos: videosCollectionList
+    String          - Url Base: rootPath
+    String          - Url completa: urlSite
+
+Params disponibles:
+    idCollection: '=',
+    idBlock: '@',
+    brcItems: '@',
+    brcClass: '@',
+    brcClassInfo: '@',
+    brcSize: '@',
+    brcPagination: '=',
+    brcCollections: '=',
+    brcPanel: '=',
+    brcShowTitle: '=',
+    brcPlayerAutoStart: '@',
+    brcPlayerSkin: '=',
+    brcIdVideo: '=',
+    favs: '=',
+    hideLikes: '='  
+
+-->
+</div>

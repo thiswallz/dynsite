@@ -1,0 +1,57 @@
+<div  >
+
+
+    <div class="loading" ng-class="{'hideIt': !loadingContent}"><i class="fa fa-refresh fa-spin"></i></div>
+
+    <!-- header-->
+    <div class="headerWrapper small" id="bc_headerWrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <a href="{{root_path}}">
+                        <div class="logo small" id="bc_clientLogo" ></div>
+                    </a>
+                    <h3 class="title" id="bc_clientTitle">{{siteData.titulo}}</h3>
+                </div>
+                <div class="hidden-xs col-sm-4 col-md-4 col-lg-4 text-right">
+                    <a target="_blank" href="http://www.viddeo.com/" style="text-decoration: none;">
+                        <span class="poweredBy">POWERED BY</span>
+                        <span class="broadcaster">VIDDEO</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mainWraper" id="bc_mainWraper">
+        <div class="container">
+
+            <!-- menu -->
+            <div ng-include="getUrl('partials/_menu.html')"></div>
+
+            <!-- medium thumbnails-->
+            <div class="row headerSection">
+                <div class="col-lg-12 title">Videos / {{categoryName}}</div>
+            </div>
+            <div class="row section">
+                <div class="col-sm-6 col-lg-4 thumbnailVideo medium" ng-repeat="video in videosCategory ">
+                    <a href="{{root_path}}video/{{video.alias}}" class="linkVideo" style="background-image:url({{s3UrlPrefix}}{{video.ruta}}/{{video.preview_l}});"></a>
+                    <div class="social"><span class="views svgFallback">{{getVideoExtraData(video.video_id_video, 'v')}}</span><span class="likes svgFallback" ng-class="{'liked': isLikedVideo(video.video_id_video)}">{{getVideoExtraData(video.video_id_video, 'l')}}</span></div>
+                    <h3>{{video.nombre}}</h3>
+                    <p class="paragraph_4_lines">{{video.descripcion}}</p>
+                </div>
+            </div>
+
+
+
+            <!-- pagination-->
+            <div ng-include="getUrl('partials/_pagination.html')"></div>
+
+        </div>
+    </div>
+
+    <!-- footer-->
+    <div ng-include="getUrl('partials/_footer.html')"></div>
+
+</div>

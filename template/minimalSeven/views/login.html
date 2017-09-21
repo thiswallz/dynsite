@@ -1,0 +1,22 @@
+<div ng-controller="loginGeneralCtrl">
+    <div class="form-group" ng-init="username='site'"></div>
+    <form name="formLogin" ng-submit="login()" role="form" novalidate>
+        <div class="statusPopup">
+            <div class="avatar customizable" id="bc_clientLogo"></div>
+            <div class="statusReqCredentials">
+                <div class="msgBox" id="private">
+                    <div class="content">
+                        <h1>PASSWORD REQUIRED</h1>
+                        <p>Please enter your password</p>
+                        <div class="iconPrefix pwd"><input type="password" name="password" id="password" ng-model="password"  maxlength="30" required></div>
+                        <label ng-if="formLogin.password.$dirty && formLogin.password.$error.required || errorLogin">
+                            <span ng-show="formLogin.password.$dirty && formLogin.password.$error.required">Password is required</span>
+                            <span ng-show="errorLogin">{{errorLogin}}</span>
+                        </label>
+                        <a class="button" ng-click="login()" ng-class="{'disabled':formLogin.$invalid || dataLoading}">Enter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

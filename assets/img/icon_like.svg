@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="11px" height="11px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.3 (16044) - http://www.bohemiancoding.com/sketch -->
+    <title>favorite-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="01_IPSUMTPL_HOME_DESKTOP" sketch:type="MSArtboardGroup" transform="translate(-651.000000, -871.000000)" fill="#697272">
+            <g id="Medium-thumbnails" sketch:type="MSLayerGroup" transform="translate(248.000000, 689.000000)">
+                <g id="thumbnail_2" transform="translate(315.000000, 0.000000)" sketch:type="MSShapeGroup">
+                    <g id="social" transform="translate(16.000000, 179.000000)">
+                        <path d="M81.3165332,3.36688228 C79.5839698,2.45246156 77.756283,3.38978334 77.5,4.61640638 C77.243717,3.38981084 75.4160027,2.45248906 73.6834668,3.36688228 C71.3741153,4.58569751 70.4668701,8.9019854 77.5,13.3619754 C84.5331299,8.9019854 83.6258847,4.58569751 81.3165332,3.36688228 L81.3165332,3.36688228 Z" id="favorite-icon"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

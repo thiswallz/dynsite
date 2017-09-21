@@ -1,0 +1,9 @@
+{
+    "custom_collection" : false,
+    "libs": [ 
+ 
+    ],
+    "max_visible_optionsmenu": 7,
+    "css_files" : ["assets/style.css"],
+    "js_files" : []
+}

@@ -1,0 +1,21 @@
+<div class="row section">
+	<div class="col-lg-12 paginationWrapper">
+	<ul class="pagination">
+
+		<!-- previous -->
+		<li ng-show="workingData.pagination.page > 1"><a ng-click="workingData.pagination.page=workingData.pagination.page-1; getNextPageOnPagination(workingData.pagination.list);" aria-label="Previous" class="previous"><span aria-hidden="true"></span></a></li>
+
+        <li ng-hide="workingData.pagination.page > 1" class="disabled"><a aria-label="Previous" class="previous"><span aria-hidden="true"></span></a></li>
+
+		<!-- pages-->
+		<li ng-click="workingData.pagination.page=1; getNextPageOnPagination(workingData.pagination.list);"><a ng-class="{'selected': workingData.pagination.page==1}">1</a></li>
+
+		<li ng-repeat="count in [].constructor(10) track by $index" ng-if="workingData.pagination.total>(workingData.pagination.items*($index+1))" ng-click="workingData.pagination.page=($index+2); getNextPageOnPagination(workingData.pagination.list);"><a ng-class="{'selected': workingData.pagination.page==($index+2)}">{{$index+2}}</a></li>
+
+		<!-- next -->
+		<li ng-show="workingData.pending" ng-click="workingData.pagination.page=workingData.pagination.page+1; getNextPageOnPagination(workingData.pagination.list);"><a aria-label="Next" class="next"><span aria-hidden="true"></span></a></li>
+        <li ng-hide="workingData.pending" class="disabled"><a aria-label="Next" class="next"><span aria-hidden="true"></span></a></li>
+
+	</ul>
+	</div>
+</div>

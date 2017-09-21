@@ -1,0 +1,83 @@
+<div >
+
+    <!-- header-->
+    <div class="headerWrapper small" id="bc_headerWrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <a href="{{root_path}}">
+                        <div class="logo small" id="bc_clientLogo" ></div>
+                    </a>
+                    <h3 class="title" id="bc_clientTitle"  >{{siteData.titulo}}</h3>
+                </div>
+                <div class="hidden-xs col-sm-4 col-md-4 col-lg-4 text-right">
+                    <a target="_blank" href="http://www.viddeo.com/" style="text-decoration: none;">
+                        <span class="poweredBy">POWERED BY</span>
+                        <span class="broadcaster">VIDDEO</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mainWraper" id="bc_mainWraper">
+        <div class="container">
+            <!-- big thumbnail for videos-->
+            <div class="row section">
+                <div id="mainVideo" class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 thumbnailVideo big live">
+                            <div class="wrapperPlayer" ng-class="{'chronometerWrapper':cronometro && channelActivo == 1}">
+                                <div ng-if="channelActivo == 1 && !cronometro">
+                                    <jwplayer ng-src="{{fileToPlayLive}}" player-options="optionsPlayerLive" player-id="playerLive"></jwplayer>
+                                </div>
+                                <div class="chronometer" ng-if="cronometro && channelActivo == 1">
+                                    <div timer-controls>
+                                        <timer end-time="endTime">
+                                            <div class="row mg0">
+                                                <div class="hidden-xs col-sm-2"></div>
+                                                <div class="col-xs-3 col-sm-2"><span class="tmUnit">{{ddays}}</span></div>
+                                                <div class="col-xs-3 col-sm-2"><span class="tmUnit">{{hhours}}</span></div>
+                                                <div class="col-xs-3 col-sm-2"><span class="tmUnit">{{mminutes}}</span></div>
+                                                <div class="col-xs-3 col-sm-2"><span class="tmUnit">{{sseconds}}</span></div>
+                                                <div class="hidden-xs col-sm-2"></div>
+                                            </div>
+                                            <div class="row mg0">
+                                                <div class="hidden-xs col-sm-2"></div>
+                                                <div class="col-xs-3 col-sm-2"><span class="tmLabel">day{{daysS}}</span></div>
+                                                <div class="col-xs-3 col-sm-2"><span class="tmLabel">hour{{hoursS}}</span></div>
+                                                <div class="col-xs-3 col-sm-2"><span class="tmLabel">minute{{minutesS}}</span></div>
+                                                <div class="col-xs-3 col-sm-2"><span class="tmLabel">second{{secondsS}}</span></div>
+                                                <div class="hidden-xs col-sm-2"></div>
+                                            </div>
+                                        </timer>
+                                    </div>
+                                    <div class="info">
+                                        <h1>Tiempo para comenzar</h1>
+                                        <p>Este evento pronto estará disponible <br class="visible-xs">para su reproducción</p>
+                                    </div>
+                                </div>
+                                <div class="msgStatus" ng-if="siteData.channel.borrado==0">
+                                    <div class="info">
+                                        <h1>¡Evento ha sido eliminado!</h1>
+                                        <p>Este evento ya no está disponible <br class="visible-xs">para su reproducción</p>
+                                    </div>
+                                </div>
+                                <div class="msgStatus" ng-if="siteData.channel.publicado==0 && siteData.channel.borrado!=0">
+                                    <div class="info">
+                                        <h1>¡Evento no está disponible!</h1>
+                                        <p>Este evento ya no está disponible <br class="visible-xs">para su reproducción</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- menu -->
+            <div ng-include="getUrl('partials/_menu.html')"></div>
+            <bcr-videos-collection id-block="panel_foot" brc-collections="siteData.collections" brc-panel="siteData.site_setting" brc-items="8" brc-class="col-sm-4 col-lg-3 thumbnailVideo small" brc-size="m" brc-pagination=true brc-show-title=true></bcr-videos-collection>
+        </div>
+    </div>
+    <!-- footer-->
+    <div ng-include="getUrl('partials/_footer.html')"></div>
+</div>

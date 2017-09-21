@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" ng-app="gallery.app" itemscope itemtype="http://schema.org/Article">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="fragment" content="!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta http-equiv="cache-control" content="max-age=3600" />
+    <link rel="dns-prefetch" href="https://pc95hghh0g.execute-api.us-east-1.amazonaws.com">
+    <link rel="dns-prefetch" href="http://ssl.p.jwpcdn.com">
+    <link rel="dns-prefetch" href="//assets2.akamaized.net">
+    <link rel="dns-prefetch" href="//imagesviddeo.akamaized.net">
+    <!--<link rel="preconnect" href="https://assets2.akamaized.net/x/dev/dist/all.js?v1">-->
+    
+    <!--***** cache *****
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />-->
+    <base href="/" target="_self">
+    <!--<base href="/SOLO_TEST/brooadcaster/gallery/" target="_self">-->
+    <title></title>
+    <link rel="stylesheet" href="dist/all.edit.css">
+</head>
+<body>
+        <script>
+            window._propertiesw = {
+                host: 'WS/',
+                env: 'dev',
+                base : "BASE", 
+                buri: 'mauricio.dev.xy.com'
+            }
+        </script>
+    <script src="./dist/all.edit-debug.js?v4"></script>
+
+
+    <script>
+        document.write('<script type="text/javascript" src="'+configSite.root+'template/'+dataSite.template_folder+'/app.options.custom.js'+'">');
+        document.write('<\/script>');
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    </script>
+
+    <!--EDIT MODE INDEX-->
+    <div class="saver" ng-class="">
+        <a href="javascript:resetAllStyles()"><img src="assets/img/icon_undo.svg" alt=""></a>
+        <a href="javascript:saveCustomization()" id="saveStyles"><img src="assets/img/icon_save.svg" alt=""></a>
+    </div>
+    
+    <!--END EDIT MODE INDEX-->
+
+    <div ng-view></div>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.82.0.min.js"></script>
+    <!-- angular-google-maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places&amp;key=AIzaSyBaqD25nJGCCNmzfE_3O3ocJgnR3gUt_jc"></script>
+    <script src="libs/vendor/google-maps/ng-map.min.js"></script>
+    <!-- cronometro -->
+    <script type="text/javascript" src="libs/vendor/timer/js/angular-timer-all.min.js"></script>
+    <!-- jwplayer -->
+    <script type="text/javascript" src="libs/vendor/jwplayer-7.11.0/jwplayer.js"></script>
+    <script>
+        jwplayer.key = "EwylCrRmAijo3/M03CBxifI/3anGaHUawpbEEGOuE9Y=";
+    </script>
+    <script type="text/javascript" src="libs/vendor/ngJwplayer.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="92px" height="52px" viewBox="0 0 92 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>360</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="6" y="10" width="75" height="42" rx="9"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="75" height="42" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="iPhone-7" transform="translate(-60.000000, -448.000000)">
+            <g id="360" transform="translate(62.000000, 448.000000)">
+                <use id="Rectangle-2" stroke="#FFFFFF" mask="url(#mask-2)" stroke-width="6" xlink:href="#path-1"></use>
+                <rect id="Rectangle-4" fill="#FFFFFF" x="66" y="12" width="12" height="39"></rect>
+                <g id="arrow" transform="translate(0.000000, 4.000000)">
+                    <path d="M16,0 C7.163444,0 0,6.71572875 0,15 C0,23.2842712 7.163444,30 16,30 L16,30" id="Oval-2" stroke="#FFFFFF" stroke-width="3"></path>
+                    <polygon id="Triangle" fill="#FFFFFF" points="22.5 29.5 14.5 34 14.5 25"></polygon>
+                </g>
+                <g id="arrow-copy" transform="translate(76.500000, 17.000000) scale(-1, -1) translate(-76.500000, -17.000000) translate(65.000000, 0.000000)">
+                    <path d="M16,0 C7.163444,0 0,6.71572875 0,15 C0,23.2842712 7.163444,30 16,30 L16,30" id="Oval-2" stroke="#FFFFFF" stroke-width="3"></path>
+                    <polygon id="Triangle" fill="#FFFFFF" points="22.5 29.5 14.5 34 14.5 25"></polygon>
+                </g>
+                <circle id="Oval" fill="#5D88B3" cx="73.5" cy="31" r="2.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

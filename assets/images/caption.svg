@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="170" height="50">
+  <ref id="texto" param="text" default=""/>
+  <text stroke="none" fill="none" font-family="Arial, Avenir Next" font-size="20" font-weight="500">
+      <tspan id="textNode" x="10" y="25" fill="red">url(#texto)</tspan>
+  </text>
+</svg>

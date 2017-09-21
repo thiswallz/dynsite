@@ -1,0 +1,29 @@
+<div class="footerDivider" id="bc_footerDivider" ></div>
+<div class="footerWrapper" id="bc_mainFooter" >
+    <div class="container">
+        <div class="row footer">
+            <div class="col-sm-6 col-md-4 col-lg-4" id="bc_mainFooter_plus">
+                <div class="categoryLinks" ng-if="siteData.links.length>0">
+                    <a ng-repeat="link in siteData.links" target="_blank" href="{{link.link}}">{{link.descripcion}}</a>
+                </div>
+            </div>
+
+            <div data-manage-from-tabs="bc_tab_setting,bc_custom_about" data-bccustom-handler-css="margin-top: 30px">
+                <div class="col-lg-4 hidden-xs hidden-sm col-md-4 customContent" ng-bind-html="trustAsHtml(siteData.acerca_de)"></div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-4 text-right socialLinks" data-manage-from-tabs="bc_tab_setting,bc_custom_social_links" data-bccustom-handler-css="margin-top: 0px;">
+                <h3 ng-if="siteData.redes_sociales.length>0">Social</h3>
+                <div class="followUs" ng-if="siteData.redes_sociales.length>0">
+                    <a ng-repeat="link in siteData.redes_sociales" target="_blank" href="{{link.url}}" class="svgFallback {{link.id}}"></a>
+                </div>
+                <div class="poweredBy">
+                    <a target="_blank" href="http://www.viddeo.com/" style="text-decoration: none;">
+                        <img src="assets/img/powered_viddeo.svg">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

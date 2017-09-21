@@ -1,0 +1,129 @@
+<div ng-controller="paymentGeneralCtrl">
+    <div ng-if="paymentCurrentScreen=='login' && !isPayment">
+        <div class="form-group" ng-init="username='site'"></div>
+        <form name="formPaymentLogin" role="form" novalidate>
+            <div class="statusPopup">
+                <div class="avatar customizable" id="bc_clientLogo"></div>
+                <div class="statusReqCredentials">
+                    <div class="msgBox" id="private">
+                        <div class="content">
+                            <h1>¿Ya tienes la entrada?</h1>
+                            <p>Ingresa tu nombre de usuario y contraseña</p>
+                            <div class="iconPrefix user"><input type="email" name="email_payLogin" id="email_payLogin_login" ng-model="userLogin.email_pay" required ng-pattern="validateMail" placeholder="usuario@company.com" /></div>
+                            <label ng-if="formPaymentLogin.email_payLogin.$dirty">
+                                <span ng-show="formPaymentLogin.email_payLogin.$dirty && formPaymentLogin.email_payLogin.$error.required" class="help-block">E-mail es requerido</span>
+                                <span ng-show="formPaymentLogin.email_payLogin.$dirty && formPaymentLogin.email_payLogin.$error.pattern" class="help-block">¡Has ingresado una dirección de e-mail no válida!</span>
+                            </label>
+                            <div class="iconPrefix pwd"><input type="password" name="password_payLogin" id="password_payLogin_login" ng-model="userLogin.password_pay" placeholder="contraseña" required /></div>
+                            <label ng-if="formPaymentLogin.password_payLogin.$dirty">
+                                <span ng-show="formPaymentLogin.password_payLogin.$dirty && formPaymentLogin.password_payLogin.$error.required" class="help-block">se requiere contraseña</span>
+                                <span ng-show="formPaymentLogin.password_payLogin.$dirty && formPaymentLogin.password_payLogin.$error.pattern" class="help-block">La contraseña debe tener solamente caracteres alfanuméricos</span>
+                            </label>
+                            <div ng-show="errorPaymentLogin" class="errorNotify">{{errorPaymentLogin}}</div>
+                            <a class="button" ng-click="paymentLogin(userLogin)" ng-class="{'disabled':formPaymentLogin.$invalid || dataLoadingLogin}">Ingresar</a>
+                            <a class="button register" ng-click="setPaymentCurrentScreen('register')">¡Paga tu entrada virtual ahora!<span>${{siteData.paymentData.amount}}</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div ng-if="paymentCurrentScreen=='register' && !isPayment">
+        <div class="form-group" ng-init="username='site'"></div>
+        <form name="formPayment" role="form" novalidate>
+            <div class="statusPopup">
+                <div class="avatar customizable" id="bc_clientLogo"></div>
+                <div class="statusReqCredentials">
+                    <div class="msgBox" id="private">
+                        <div class="content">
+                            <h1>Regístrate</h1>
+                            <p>Escoge un nombre de usuario y contraseña</p>
+                            <div class="iconPrefix user"><input type="email" name="email_pay" id="email_pay" ng-model="$parent.pay.email_pay" ng-pattern="validateMail" placeholder="usuario@company.com" required></div>
+                            <label ng-if="formPayment.email_pay.$dirty">
+                                <span ng-show="formPayment.email_pay.$dirty && formPayment.email_pay.$error.required" class="help-block">E-mail es requerido</span>
+                                <span ng-show="formPayment.email_pay.$dirty && formPayment.email_pay.$error.pattern" class="help-block">¡Has ingresado una dirección de e-mail no válida!</span>
+                            </label>
+                            <div class="iconPrefix pwd"><input type="password" name="password_pay" id="password_pay" ng-model="$parent.pay.password_pay" placeholder="contraseña" required></div>
+                            <label ng-if="formPayment.password_pay.$dirty">
+                                <span ng-show="formPayment.password_pay.$dirty && formPayment.password_pay.$error.required" class="help-block">se requiere contraseña</span>
+                                <span ng-show="formPayment.password_pay.$dirty && formPayment.password_pay.$error.pattern" class="help-block">La contraseña debe tener solamente caracteres alfanuméricos</span>
+                            </label>
+                            <div class="iconPrefix pwd"><input type="password" name="repeat_password_pay" id="repeat_password_pay" ng-model="$parent.pay.repeat_password_pay" placeholder="repetir contraseña" pw-check='password_pay' required></div>
+                            <label ng-if="formPayment.repeat_password_pay.$dirty">
+                                <span ng-show="formPayment.repeat_password_pay.$dirty && formPayment.repeat_password_pay.$error.required" class="help-block">se requiere repetir contraseña</span>
+                                <span ng-show="formPayment.repeat_password_pay.$dirty && formPayment.repeat_password_pay.$error.pattern" class="help-block">La contraseña debe tener solamente caracteres alfanuméricos</span>
+                                <span ng-show="formPayment.repeat_password_pay.$dirty && formPayment.repeat_password_pay.$error.pwmatch" class="help-block">Contraseñas ingresadas no coinciden</span>
+                            </label>
+                            <div class="row">
+                                <div class="col-xs-6"><a class="button arrowLeft link" ng-click="setPaymentCurrentScreen('login')">Cancelar</a></div>
+                                <div class="col-xs-6"><a class="button arrowRight" ng-click="payment(pay)" ng-class="{'disabled':formPayment.$invalid || dataLoading}">Regístrate</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div ng-if="isPayment">
+        <div class="statusPopup">
+            <div class="avatar customizable" id="bc_clientLogo"></div>
+            <div class="statusReqCredentials">
+                <div>
+                    <div class="msgBox" id="private">
+                        <div class="content">
+                            <h1>Método de pago</h1>
+                            <p>Escoge tu método de pago</p>
+                            <form name="formLogin" role="form" novalidate>
+                                <div class="row radioWrapper">
+                                    <div class="col-xs-6" ng-class="{'selected':defaultPaymentMethod=='1'}">
+                                        <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" ng-click="defaultPaymentMethod=1" checked>
+                                        Paypal
+                                    </label>
+                                    </div>
+                                    <div class="col-xs-6" ng-class="{'selected':defaultPaymentMethod=='2'}">
+                                        <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" ng-click="defaultPaymentMethod=2" disabled>
+                                        WebPay
+                                    </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6"><a class="button arrowLeft link" ng-click="setPaymentCurrentScreen('register');isPayment=false;">Cancelar</a></div>
+                                    <div class="col-xs-6"><a class="button arrowRight" onclick="document.frmPaypal.submit();" ng-class="{'disabled':formLogin.$invalid || dataLoading}">Pagar ahora</a></div>
+                                </div>
+                            </form>
+                            <div ng-controller="paymentSendCtrl" ng-init="paramsPay = {};
+                                    paramsPay.return_url = siteData.url + '/#/paymentsuccess';
+                                    paramsPay.item_site = siteData.id_sitio;
+                                    paramsPay.item_number = siteData.paymentData.oc;
+                                    paramsPay.invoice = siteData.paymentData.oc;
+                                    paramsPay.amount = siteData.paymentData.amount;
+                                    paramsPay.cancel_return = siteData.url + '/#/payment';
+                                    setData(paramsPay)">
+                                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" name="frmPaypal">
+                                    <input type="hidden" name="cmd" value="_xclick">
+                                    <input type="hidden" name="charset" value="utf-8">
+                                    <input type="hidden" name="business" value="{{optsPaypal.business}}">
+                                    <input type="hidden" name="custom" value="{{optsPaypal.item_site}}">
+                                    <input type="hidden" name="item_name" value="{{optsPaypal.item_name}}">
+                                    <input type="hidden" name="item_number" value="{{optsPaypal.item_number}}">
+                                    <input type="hidden" name="invoice" value="{{optsPaypal.invoice}}">
+                                    <input type="hidden" name="amount" value="{{optsPaypal.amount}}">
+                                    <input type="hidden" name="currency_code" value="{{optsPaypal.currency_code}}">
+                                    <input type="hidden" name="return" ng-if="optsPaypal.return_url != '';" value="{{optsPaypal.return_url}}">
+                                    <input type="hidden" name="cancel_return" ng-if="optsPaypal.cancel_return!= '';" value="{{optsPaypal.cancel_return}}">
+                                    <input type="hidden" name="no_shipping" value="1">
+                                    <input type="hidden" name="notify_url" value="{{optsPaypal.notify_url}}">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
